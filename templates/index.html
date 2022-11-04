@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <!-- card1 start -->
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card widget-card-1">
+                                                    <div class="card-block-small">
+                                                        <i class="icofont icofont-pie-chart bg-c-blue card1-icon"></i>
+                                                        <span class="text-c-blue f-w-600">Current Balance</span>
+                                                        <h4>${{balance}}</h4>
+                                                        <div>
+                                                            <span class="f-left m-t-10 text-muted">
+                                                                <i class="text-c-blue f-16 icofont icofont-warning m-r-10"></i>Profit and Investment
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- card1 end -->
+                                            <!-- card1 start -->
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card widget-card-1">
+                                                    <div class="card-block-small">
+                                                        <i class="icofont icofont-ui-home bg-c-pink card1-icon"></i>
+                                                        <span class="text-c-pink f-w-600">Today's Profit</span>
+                                                        <h4>${{balance}}</h4>
+                                                        <div>
+                                                            <span class="f-left m-t-10 text-muted">
+                                                                <i class="text-c-pink f-16 icofont icofont-calendar m-r-10"></i>Last 24 hours
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- card1 end -->
+                                            <!-- card1 start -->
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card widget-card-1">
+                                                    <div class="card-block-small">
+                                                        <i class="icofont icofont-warning-alt bg-c-green card1-icon"></i>
+                                                        <span class="text-c-green f-w-600">Daily Profit</span>
+                                                        <h4>{{percentage}}</h4>
+                                                        <div>
+                                                            <span class="f-left m-t-10 text-muted">
+                                                                <i class="text-c-green f-16 icofont icofont-tag m-r-10"></i>Percentage
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- card1 end -->
+                                            <!-- card1 start -->
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card widget-card-1">
+                                                    <div class="card-block-small">
+                                                        <i class="icofont icofont-social-telegram bg-c-blue card1-icon"></i>
+                                                        <span class="text-c-blue f-w-600">Telegram</span>
+                                                        <h4>Join</h4>
+                                                        <div>
+                                                            <span class="f-left m-t-10 text-muted">
+                                                                <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Meet Your Peers
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- card1 end -->
+                                            <!-- Statestics Start -->
+                                            <div class="col-md-12 col-xl-7">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Statestics</h5>
+                                                        <div class="card-header-left ">
+                                                        </div>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="icofont icofont-simple-left "></i></li>
+                                                                <li><i class="icofont icofont-maximize full-card"></i></li>
+                                                                <li><i class="icofont icofont-minus minimize-card"></i></li>
+                                                                <li><i class="icofont icofont-refresh reload-card"></i></li>
+                                                                <li><i class="icofont icofont-error close-card"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div id="statestics-chart" style="height:517px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-md-12 col-xl-4">
+                                                    <div class="card twitter-card">
+                                                        <div class="card-header">
+                                                            <i class="icofont icofont-social-telegram"></i>
+                                                            <div class="d-inline-block">
+                                                                <h5>Telegram</h5>
+                                                                <span>Total number of Members</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-block text-center">
+                                                            <div class="row">
+                                                                <div class="col-6 b-r-default">
+                                                                    <h2>100</h2>
+                                                                </div>
+                                                            
+                                                                <div class="col-6 b-r-default">
+                                                                    <p class="text-muted">Members</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card dribble-card">
+                                                        <div class="card-header bg-c-green">
+                                                            <i class="icofont icofont-social-whatsapp"></i>
+                                                            <div class="d-inline-block ">
+                                                                <h5>What'sApp</h5>
+                                                                <span>Total number of Members</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-block text-center">
+                                                            <div class="row">
+                                                                <div class="col-6 b-r-default">
+                                                                    <h2>100</h2>
+                                                                </div>
+
+                                                                <div class="col-6 b-r-default">
+                                                                    <p class="text-muted">Members</p>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                            <div class="col-md-12 col-xl-12">
+                                                <div class="card project-task">
+                                                    <div class="card-header">
+                                                        <div class="card-header-left ">
+                                                            <h5>{{ header }} </h5>
+                                                        </div>
+                                                        <div class="card-header-right">
+                                                            <ul class="list-unstyled card-option">
+                                                                <li><i class="icofont icofont-simple-left "></i></li>
+                                                                <li><i class="icofont icofont-maximize full-card"></i></li>
+                                                                <li><i class="icofont icofont-minus minimize-card"></i></li>
+                                                                <li><i class="icofont icofont-refresh reload-card"></i></li>
+                                                                <li><i class="icofont icofont-error close-card"></i></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block p-b-10">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Amount</th>
+                                                                        <th>Currency</th>
+                                                                        <th>Date</th>
+                                                                        <th>Accounts for Deposit</th>
+                                                                        <th>Random Code</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for i in lists_of_top_balances %}
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="task-contain">
+                                                                                <h6 class="bg-c-blue d-inline-block text-center">V</h6>
+                                                                                <p class="d-inline-block m-l-20">{{ i.amount }}</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">{{ i.date_deposited }}</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">{{ i.phone }}</p>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">{{ i.person }}</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-6">
+                                                <div class="card add-task-card">
+                                                    <div class="card-header">
+                                                        <div class="card-header-left">
+                                                            <h5>Top Withdraws</h5>
+                                                        </div>
+                                                        <div class="card-header-right">
+                                                            <button class="btn btn-card btn-primary">Most Recent</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        {% for i in lists_of_top_withdraws %}
+                                                        <div class="to-do-list">
+                                                            <div class="checkbox-fade fade-in-primary d-block">
+                                                                <label class="check-task d-block">
+                                                                    <input type="checkbox" value="">
+                                                                    <span class="cr">
+                                                                        <i class="cr-icon icofont icofont-ui-check txt-default"></i>
+                                                                    </span>
+                                                                    <span><h6>{{ i.person.username }} <span class="label bg-c-green m-l-10 f-10">{{ i.amount }}</span></h6><p class="text-muted m-l-40">{{ i.date_withdraw }}</p></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xl-6">
+                                                <div class="card add-task-card">
+                                                    <div class="card-header">
+                                                        <div class="card-header-left">
+                                                            <h5>Top deposits</h5>
+                                                        </div>
+                                                        <div class="card-header-right">
+                                                            <button class="btn btn-card btn-primary">Most Recent </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        {% for i in lists_of_top_disposites %}
+                                                        <div class="to-do-list">
+                                                            <div class="checkbox-fade fade-in-primary d-block">
+                                                                <label class="check-task d-block">
+                                                                    <input type="checkbox" value="">
+                                                                    <span class="cr">
+                                                                        <i class="cr-icon icofont icofont-ui-check txt-default"></i>
+                                                                    </span>
+                                                                    <span><h6>{{ i.person.username }} <span class="label bg-c-green m-l-10 f-10">{{ i.amount }}</span></h6><p class="text-muted m-l-40">{{ i.date_withdraw }}</p></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                   
+                                                <!-- Data widget End -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div id="styleSelector">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}
