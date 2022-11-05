@@ -42,24 +42,31 @@ def index(request):
             money_new_new.amount=str(money_new)
             money_new_new.date_deposited=datetime.datetime.today()
             money_new_new.save()
-
-    balance=Balance.objects.get(person=request.user.id)
-    money=float(balance.amount)
-    if  10>=money<150:
-        percentage=4
-    elif 151>=money<=350:
-        percentage=4.5
-    elif 351>=money<=750:
-        percentage=5.2
-    elif 751>=money<=1250:
-        percentage=6.1
-    elif 1251>=money<=2000:
-        percentage=7.5
+    try:
+        balance=Balance.objects.get(person=request.user.id)
+    except:
+        balance=0
+        percentage=0
+    try:
+        lists_of_top_withdraws=list(Withdrawal.objects.order_by('-date_withdraw')[:12])
+        lists_of_top_disposites=list(Deposit.objects.order_by('-date_deposit')[:12])
+        lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
+    except:
+        pass
+    if balance>0:
+        money=float(balance.amount)
+        balance=balance.amount
+        if  10>=money<150:
+            percentage=4
+        elif 151>=money<=350:
+            percentage=4.5
+        elif 351>=money<=750:
+            percentage=5.2
+        elif 751>=money<=1250:
+            percentage=6.1
+        elif 1251>=money<=2000:
+            percentage=7.5
     
-    balance=balance.amount
-    lists_of_top_withdraws=list(Withdrawal.objects.order_by('-date_withdraw')[:12])
-    lists_of_top_disposites=list(Deposit.objects.order_by('-date_deposit')[:12])
-    lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
     print(f'{request.user.id}')
     context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
     return render(request, 'index.html',context)
@@ -144,10 +151,8 @@ def withdrawals(request):
     return render(request,'withdep.html',context)
 def deposit(request):
     if request.method=="POST":
-        form=Deposit_Form(request.POST)
-        if form.is_valid():
 
-            phone=form.cleaned_data['phone']
+            address=request.POST.get('')
             currency=form.cleaned_data['currency']
             amount=form.cleaned_data['amount']
             message='Deposit to Veronations'
@@ -170,10 +175,12 @@ def deposit(request):
             feed_back.person=request.user.id
             feed_back.save()
             
+    try:
+        category=Currencie.objects.all()
+    except:
+        category=[]
     
-    form=Deposit_Form()
-    category=Currencie.objects.all()
-    context={'category':category,'form':form,'header':'Deposit Form','button':'Deposit'}
+    context={'category':category,'header':'Deposit Form','button':'Deposit'}
     return render(request,'withdep.html',context)
 # Create your views here.
 def signin(request):
@@ -200,31 +207,28 @@ def signin(request):
     return render(request,'sign-in.html',context)
 
 def signup(response):
+    password=response.POST.get('password')
+    username=response.POST.get('username')
+    email=response.POST.get('email')
+    ref_code=response.POST.get('refferral')
     if response.method=="POST":
-        form=RegistrationForm(response.POST)
-        if form.is_valid():
-            if User.objects.filter(email=form.cleaned_data['email']):
+            if User.objects.filter(email=email):
                 messages.success(response, f'Email already in use, Please use a different Email')
                 return render(response,'signup.html',)
-            elif User.objects.filter(username=form.cleaned_data['username']):
+            elif User.objects.filter(username=username):
                 messages.success(response, f'Username already in use, Please use a different Username')
                 return render(response,'signup.html',)
-            ref_code=response.POST.get('refferral')
             try:
                 referral_code=Refferral.objects.get(code=ref_code)
             except:
-                form=RegistrationForm()
-                messages.success(response, f'Wrong Referral Code, Not Registered in This System.')
-                context={'form':form}
+                messages.success(response, f'Wrong Referral Username,User Not Registered in This System.')
                 return render(response,'sign-up.html',context)
             Referreds=Referred(personwhorefferred=ref_code,personrefferred=form.cleaned_data['username'])
             Referreds.save()
+            form=User(username=username,password1=password,email=email)
             form.save()
             messages.success(response, f'Successfully Registered,Please log into your Account to Make Orders')
             return redirect('login')
-    else:
-        form=RegistrationForm()
-    context={'form':form}
     return render(response,'sign-up.html',context)
 
 
