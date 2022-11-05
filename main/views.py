@@ -11,7 +11,7 @@ from django.utils import timezone
 import random
 #from .pay import PayClass 
 # Create your views here.
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def index(request):
     today = datetime.date.today()
     timetoday=timezone.now
@@ -52,7 +52,9 @@ def index(request):
         lists_of_top_disposites=list(Deposit.objects.order_by('-date_deposit')[:12])
         lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
     except:
-        pass
+        lists_of_top_balances=[]
+        lists_of_top_disposites=[]
+        lists_of_top_withdraws=[]
     if balance>0:
         money=float(balance.amount)
         balance=balance.amount
