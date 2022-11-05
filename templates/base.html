@@ -62,11 +62,8 @@
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="ti-menu"></i>
                         </a>
-                        <a class="mobile-search morphsearch-search" href="#">
-                            <i class="ti-search"></i>
-                        </a>
                         <a href="index.html">
-                            <img class="img-fluid" src="{% static 'assets/images/logo.png' %}" alt="Theme-Logo" />
+                            <img class="img-fluid" src="{% static 'assets/logo-removebg-preview.png' %}"  alt="Template"style="height:60px;width: 90px;" />
                         </a>
                         <a class="mobile-options">
                             <i class="ti-more"></i>
@@ -86,52 +83,10 @@
                             </li>
                         </ul>
                         <ul class="nav-right">
-                            <li class="header-notification">
-                                <a href="#!">
-                                    <i class="ti-bell"></i>
-                                    <span class="badge bg-c-pink"></span>
-                                </a>
-                                <ul class="show-notification">
-                                    <li>
-                                        <h6>Notifications</h6>
-                                        <label class="label label-danger">New</label>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="d-flex align-self-center" src="{% static 'assets/images/user.png' %}" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">{% if user.is_authenticated %}{{ request.user.username }}{% else %}Guest User{% endif %}</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="d-flex align-self-center" src="{% static 'assets/images/user.png' %}" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">Joseph William</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="media">
-                                            <img class="d-flex align-self-center" src="{% static 'assets/images/user.png' %}" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">Sara Soudein</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            
+                        
                             <li class="user-profile header-notification">
                                 <a href="#!">
-                                    <img src="{% static 'assets/images/avatar-4.jpg' %}" class="img-radius" alt="User-Profile-Image">
+                                    <img src="{% static 'assets/default.jpg' %}" class="img-radius" alt="User-Profile-Image">
                                     <span>{% if user.is_authenticated %}{{ request.user.username }}{% else %}Guest User{% endif %}</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
@@ -164,7 +119,7 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-40 img-radius" src="{% static 'assets/images/avatar-4.jpg' %}" alt="User-Profile-Image">
+                                    <img class="img-40 img-radius" src="{% static 'assets/default.jpg' %}" alt="User-Profile-Image">
                                     <div class="user-details">
                                         <span>{% if user.is_authenticated %}{{ request.user.username }}{% else %}Guest User{% endif %}</span>
                                         <span id="more-details">Investor<i class="ti-angle-down"></i></span>

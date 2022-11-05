@@ -36,11 +36,11 @@ class Withdrawal_Form_New(ModelForm):
 	amount=forms.CharField(label='MTN Account Registration Name',required=False)
 	#amount = forms.CharField(required=True,label='Amount in Dollars eg.$10',)
 	phone = forms.CharField(required=True,label="Do not Put a plus Sign,eg.'256..','254'",)
-
+'''
 class Deposit_Form(forms.ModelForm):
 
 	class Meta:
 		model=Deposit
 		fields=["amount","phone","currency"]
 	amount=forms.CharField(label='Customize Your Own Category for Products',required=True)
-	phone = forms.CharField(required=True)
+	phone = forms.CharField(required=True)'''

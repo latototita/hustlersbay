@@ -33,11 +33,13 @@ class Withdrawal(models.Model):
 		ordering = ('-date_withdraw', )
 class Deposit(models.Model):
 	person = models.CharField(max_length=12,unique=True)
-	date_deposit =models.DateTimeField(default=datetime.datetime.today)
 	amount= models.CharField(max_length=12)
-	currency=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
-	phone =models.CharField(max_length=12, default=1)
+	method=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
+	wallet =models.CharField(max_length=12, default=1)
+	transID =models.CharField(max_length=12, default=1)
 	txt_random=models.CharField(max_length=12, default=1)
+	date_deposit =models.DateTimeField(default=datetime.datetime.today)
+	status=models.BooleanField(default=False)
 	def __str__(self):
 		return self.person
 

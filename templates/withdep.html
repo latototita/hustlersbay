@@ -33,7 +33,7 @@
                                   <br>
                         <form class="md-float-material"  method="POST">
                             <div class="text-center">
-                                <img src="{% static 'assets/images/auth/logo-dark.png' %}" alt="logo.png">
+                                <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
                             </div>
                             <div class="auth-box">
                                 <div class="row m-b-20">
@@ -43,28 +43,29 @@
                                 </div>
                                 <hr/>
                                 {% csrf_token %}
-                                {{ form |crispy }}
-                                <!--
-                                <label  class="form-control">Deposit Amount</label>
+                                <label  class="form-control">Amount in USD</label>
                                 <div class="input-group">
-
-                                    <input type="number" class="form-control" placeholder="Amount in USD(US Dollars)" name="username">
+                                    <input type="number" class="form-control" placeholder="Amount in USD(US Dollars)" name="amount">
                                     <span class="md-line"></span>
                                 </div>
-                                <label  class="form-control">Enter Number to deposit From</label>
+                                <label  class="form-control">Enter Wallet Address(Trc-20 etc) or Deposit Account(MTN/AIRTEL)</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Mobile Money Number starting with 256..." name="phone">
+                                    <input type="text" class="form-control" placeholder="Mobile Money Number starting with 256..." name="wallet">
                                     <span class="md-line"></span>
                                 </div>
-                                <label  class="form-control">Select Currency</label>
+                                <label  class="form-control">Select Payment method</label>
                                 <div class="input-group">
-                                        <select class="form-control" id="sortby">
+                                        <select class="form-control" id="method">
                                             {% for i in category %}
                                             <option value="trending">{{ i.name }}</option>
                                             {% endfor %}
                                         </select>
                                 </div>
-                            -->
+                                <label  class="form-control">Transaction ID(Airtel,MTN),Hash(Trust wallet)</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Transaction ID" name="transID">
+                                    <span class="md-line"></span>
+                                </div>
                                 <div class="row m-t-30">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">{{button}}.</button>
@@ -74,10 +75,10 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <p class="text-inverse text-left m-b-0">Thank you and Doing Business With Us.</p>
-                                        <p class="text-inverse text-left"><b>Veronations</b></p>
+                                        <p class="text-inverse text-left"><b>Hustlersbay</b></p>
                                     </div>
                                     <div class="col-md-2">
-                                        <img src="{% static 'assets/images/auth/Logo-small-bottom.png' %}" alt="small-logo.png">
+                                        <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
                                     </div>
                                 </div>
                             </div>

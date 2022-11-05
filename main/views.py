@@ -151,29 +151,23 @@ def withdrawals(request):
     return render(request,'withdep.html',context)
 def deposit(request):
     if request.method=="POST":
-
-            address=request.POST.get('')
-            currency=form.cleaned_data['currency']
-            amount=form.cleaned_data['amount']
-            message='Deposit to Veronations'
-            txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789!@@#$%^&*+_-/.,?><":|;}][]`~') for _ in range(10)])
-            '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
-            if callPay["response"]==200 or callPay["response"]==202:
-                verify = PayClass.verifymomo(callPay["ref"])
-                print(verify["status"])
-                if verify["status"]=="SUCCESSFUL":
-                    print('Notification sent')
-
-            else:
-                messages.success(response, f'Problem with the System')'''
-            balance=Balance(person=request.user.id,amount=amount,date_deposited=datetime.datetime.today())
-            balance.save()
-            feed_back=form.save(commit=False)
-            feed_back.phone=phone
-            feed_back.currency=currency
-            feed_back.txt_random=txt_random
-            feed_back.person=request.user.id
-            feed_back.save()
+        amount=request.POST.get('amount')
+        wallet=request.POST.get('wallet')
+        method=request.POST.get('method')
+        transID=request.POST.get('transID')
+        txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
+        '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
+                    if callPay["response"]==200 or callPay["response"]==202:
+                        verify = PayClass.verifymomo(callPay["ref"])
+                        print(verify["status"])
+                        if verify["status"]=="SUCCESSFUL":
+                            print('Notification sent')
+        
+                    else:
+                        messages.success(response, f'Problem with the System')'''
+        feed_back=Deposit(person=request.user.id,wallet=wallet,amount=amount,transID=transID,method=method,txt_random=txt_random,date_deposit=datetime.datetime.today())
+        feed_back.save()
+        return redirect('index')
             
     try:
         category=Currencie.objects.all()
