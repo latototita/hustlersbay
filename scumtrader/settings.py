@@ -61,7 +61,6 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'sekizai.context_processors.sekizai',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -70,6 +69,7 @@ TEMPLATES = [
         },
     },
 ]
+
 WSGI_APPLICATION = 'scumtrader.wsgi.application'
 
 import dj_database_url
