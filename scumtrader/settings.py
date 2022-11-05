@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    
 ]
 
 MIDDLEWARE = [
@@ -141,7 +140,3 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER='pearlmartbusinesses@yahoo.com'
 EMAIL_HOST_PASSWORD='jlxmlemwkciomuea'
 
-CRON_CLASSES = [
-    "main.cron.MyCronJob",
-    # ...
-]
