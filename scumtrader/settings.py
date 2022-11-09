@@ -24,8 +24,7 @@ SECRET_KEY = 'django-insecure-xi-23yx&fcy*gq#$g%z%-77vq-6x9tqcxr=rm^g^_r@bzfawdb
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+
 
 ALLOWED_HOSTS = ['hustlersbay.herokuapp.com','localhost','hustlersbay.online']
 
@@ -53,7 +52,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 ROOT_URLCONF = 'scumtrader.urls'
 
 TEMPLATES = [
