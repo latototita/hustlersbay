@@ -11,7 +11,7 @@ from django.utils import timezone
 import random
 #from .pay import PayClass 
 # Create your views here.
-@login_required(login_url='login')
+
 def index(request):
     today = datetime.date.today()
     timetoday=timezone.now
