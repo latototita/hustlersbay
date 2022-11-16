@@ -225,7 +225,9 @@ def signup(response):
             form.save()
             messages.success(response, f'Successfully Registered,Please log into your Account to Make Orders')
             return redirect('login')
-    return render(response,'sign-up.html')
+    form=RegistrationForm()
+    context={'form':form}
+    return render(response,'sign-up.html',context)
 
 
 @login_required(login_url='login')
