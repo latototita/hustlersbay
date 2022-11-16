@@ -57,11 +57,11 @@ class Earning(models.Model):
 		ordering = ('-time_earned', )
 
 class Referred(models.Model):
-	personwhorefferred = models.CharField(max_length=12,unique=True)
-	personrefferred= models.CharField(max_length=25, unique=True)
+	personwhorefferred =  models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+	personrefferred= models.CharField(max_length=12)
 	date_refferred =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
-		return self.personwhorefferred
+		return self.personrefferred
 
 	class Meta:
 		ordering = ('-date_refferred', )

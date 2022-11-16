@@ -16,62 +16,64 @@ def index(request):
     today = datetime.date.today()
     timetoday=timezone.now
     results=request.GET.get("kw")
-    if Balance.objects.filter(date_deposited__gte=today).filter(person=request.user.id):
-        pass
-    else:
-        try:
-            money_new_new=Balance.objects.get(person=request.user.id)
-        except:
-            money_new_new=None
-        if money_new_new is None:
+    if request.user.is_authenticated:
+        if Balance.objects.filter(date_deposited__gte=today).filter(person=request.user.id):
             pass
         else:
-            print(money_new_new)
-            money=float(money_new_new.amount)
+            try:
+                money_new_new=Balance.objects.get(person=request.user.id)
+            except:
+                money_new_new=None
+            if money_new_new is None:
+                pass
+            else:
+                print(money_new_new)
+                money=float(money_new_new.amount)
+                if  10>=money<150:
+                    money_new=((4/100)*money+money)
+                elif 151>=money<=350:
+                    money_new=((4.5/100)*money+money)
+                elif 351>=money<=750:
+                    money_new=((5.2/100)*money+money)
+                elif 751>=money<=1250:
+                    money_new=((6.1/100)*money+money)
+                elif 1251>=money<=2000:
+                    money_new=((7.5/100)*money+money)
+                money_new=round(money_new, -2)
+                money_new_new.amount=str(money_new)
+                money_new_new.date_deposited=datetime.datetime.today()
+                money_new_new.save()
+        try:
+            balance=Balance.objects.get(person=request.user.id)
+        except:
+            balance=0
+            percentage=0
+        try:
+            lists_of_top_withdraws=list(Withdrawal.objects.order_by('-date_withdraw')[:12])
+            lists_of_top_disposites=list(Deposit.objects.order_by('-date_deposit')[:12])
+            lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
+        except:
+            lists_of_top_balances=[]
+            lists_of_top_disposites=[]
+            lists_of_top_withdraws=[]
+        if balance>0:
+            money=float(balance.amount)
+            balance=balance.amount
             if  10>=money<150:
-                money_new=((4/100)*money+money)
+                percentage=4
             elif 151>=money<=350:
-                money_new=((4.5/100)*money+money)
+                percentage=4.5
             elif 351>=money<=750:
-                money_new=((5.2/100)*money+money)
+                percentage=5.2
             elif 751>=money<=1250:
-                money_new=((6.1/100)*money+money)
+                percentage=6.1
             elif 1251>=money<=2000:
-                money_new=((7.5/100)*money+money)
-            money_new=round(money_new, -2)
-            money_new_new.amount=str(money_new)
-            money_new_new.date_deposited=datetime.datetime.today()
-            money_new_new.save()
-    try:
-        balance=Balance.objects.get(person=request.user.id)
-    except:
-        balance=0
-        percentage=0
-    try:
-        lists_of_top_withdraws=list(Withdrawal.objects.order_by('-date_withdraw')[:12])
-        lists_of_top_disposites=list(Deposit.objects.order_by('-date_deposit')[:12])
-        lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
-    except:
-        lists_of_top_balances=[]
-        lists_of_top_disposites=[]
-        lists_of_top_withdraws=[]
-    if balance>0:
-        money=float(balance.amount)
-        balance=balance.amount
-        if  10>=money<150:
-            percentage=4
-        elif 151>=money<=350:
-            percentage=4.5
-        elif 351>=money<=750:
-            percentage=5.2
-        elif 751>=money<=1250:
-            percentage=6.1
-        elif 1251>=money<=2000:
-            percentage=7.5
-    
-    print(f'{request.user.id}')
-    context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
-    return render(request, 'index.html',context)
+                percentage=7.5
+        
+        print(f'{request.user.id}')
+        context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
+        return render(request, 'index.html',context)
+    return render(request, 'blog.html')
 
 
 def terms(request):
@@ -206,27 +208,27 @@ def signup(response):
     password=response.POST.get('password')
     username=response.POST.get('username')
     email=response.POST.get('email')
-    ref_code=response.POST.get('refferral')
+    ref_name=response.POST.get('refferral')
     if response.method=="POST":
             if User.objects.filter(email=email):
                 messages.success(response, f'Email already in use, Please use a different Email')
-                return render(response,'signup.html',)
-            elif User.objects.filter(username=username):
+                return render(response,'sign-up.html')
+            if User.objects.filter(username=username):
                 messages.success(response, f'Username already in use, Please use a different Username')
-                return render(response,'signup.html',)
+                return render(response,'sign-up.html')
             try:
-                referral_code=Refferral.objects.get(code=ref_code)
+                referral_code=User.objects.get(username=ref_name)
             except:
                 messages.success(response, f'Wrong Referral Username,User Not Registered in This System.')
-                return render(response,'sign-up.html',context)
-            Referreds=Referred(personwhorefferred=ref_code,personrefferred=form.cleaned_data['username'])
+                return render(response,'sign-up.html')
+            Referreds=Referred(personwhorefferred=referral_code,personrefferred=username)
             Referreds.save()
-            form=User(username=username,password1=password,email=email)
+            form=User(username=username,password=password,email=email)
             form.save()
             messages.success(response, f'Successfully Registered,Please log into your Account to Make Orders')
             return redirect('login')
-    form=RegistrationForm()
-    context={'form':form}
+
+    context={}
     return render(response,'sign-up.html',context)
 
 
