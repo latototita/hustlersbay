@@ -2,98 +2,182 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block body %}
-
-<div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
+<body class="fix-menu">
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+    <div class="ball-scale">
+        <div class='contain'>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+            <div class="ring"><div class="frame"></div></div>
+        </div>
+    </div>
+</div>
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
 
+                            <!-- Main-body start -->
                             <div class="main-body">
-                                <div class="page-wrapper">
+                                <div class="page-wrapper">                                    
+                                    <!-- Page-body start -->
                                     <div class="page-body">
-            <div class="row">
-                <div class="col-md-12 col-xl-6">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                     <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Hello card</h5>
-                            <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                        </div>
-                        <div class="card-block">
-                            <p>
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                sunt in culpa qui officia deserunt mollit anim id est laborum."
-                            </p>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- List Tag card start -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Deposit Procedure</h5>
+                                                        <span>Deposit is manual to avoid  lost due to hackers and system automation failure</span>
+                                                        <div class="card-header-right">
+                                                            <i class="icofont icofont-spinner-alt-5"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-block list-tag">
+                                                        <div class="row">
+                                                            <button class="accordion">How to make Crytocurrency Payments</button>
+                                                            <div class="col-sm-12 col-xl-6 panel">
+                                                                <h4 class="sub-title">Crytocurrency Payment</h4>
+                                                                <ol>
+                                                                    <li>Send your deposit amount to the crytocurrency wallet matching your payment option</li>
+                                                                        <ol>
+                                                                            <li>Phasellus iaculis neque</li>
+                                                                            <li>Purus sodales ultricies</li>
+                                                                            <li>Vestibulum laoreet porttitor sem</li>
+                                                                            <li>Ac tristique libero volutpat at</li>
+                                                                        </ol>
+                                                                    <li>Copy and Paste Transaction ID or hash in the form bellow.</li>
+                                                                    <li>Click on submit. Deposit Process Complete.</li>
+                                                                    <li>Account will be updated immediately(Within 5 minutes.</li>
+                                                                </ol>
+                                                            </div>
+                                                            <button class="accordion">How to Make Airtel Payments</button>
+                                                            <div class="col-sm-12 col-xl-6 panel">
+                                                                <h4 class="sub-title">Airtel</h4>
+                                                                <ol>
+                                                                    <li>Make payment of your deposit amount to the this Merchant code <ul></ul>.</li>
+                                                                    <li>Copy and Paste Transaction ID(From the Airtel Payment Successful message) in the form bellow.</li>
+                                                                    <li>Click on submit. Deposit Process Complete.</li>
+                                                                    <li>Account will be updated immediately(Within 5 minutes.</li>
+                                                                </ol>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- List Tag card end -->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- Typography card start -->
+                                                <div class="card">
+                                                    <div class="card-block typography">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 signup-card card-block auth-body mr-auto ml-auto">
+                                                        <form class="md-float-material"  method="POST">
+                                                            <div class="text-center">
+                                                                <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
+                                                            </div>
+                                                            <div class="auth-box">
+                                                                <div class="row m-b-20">
+                                                                    <div class="col-md-12">
+                                                                        <h3 class="text-center txt-primary">{{header}}.</h3>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                {% csrf_token %}
+                                                                
+                                                                <label  class="form-control">Enter Transaction ID(Airtel,MTN),Hash(Trust wallet)</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="Transaction ID" name="transID">
+                                                                    <span class="md-line"></span>
+                                                                </div>
+                                                                <div class="row m-t-30">
+                                                                    <div class="col-md-12">
+                                                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Submit Form.</button>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                <div class="row">
+                                                                    <div class="col-md-10">
+                                                                        <p class="text-inverse text-left m-b-0">Thank you and Doing Business With Us.</p>
+                                                                        <p class="text-inverse text-left"><b>Hustlersbay</b></p>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Typography card end -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div id="styleSelector">
+
+                            </div>
                         </div>
                     </div>
                 </div>
-                                   
-         
-                <div class="col-md-12 col-xl-6">
-                    <!-- Authentication card start -->
-                    <div class="signup-card card-block auth-body mr-auto ml-auto">
-                        <br>
-                                  <br>
-                                  <br>
-
-                        <form class="md-float-material"  method="POST">
-                            <div class="text-center">
-                                <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                            </div>
-                            <div class="auth-box">
-
-                                <div class="row m-b-20">
-                                    <div class="col-md-12">
-                                        <h3 class="text-center txt-primary">{{header}}.</h3>
-                                    </div>
-                                </div>
-                                <hr/>
-                                {% csrf_token %}
-                                
-                                <label  class="form-control">Transaction ID(Airtel,MTN),Hash(Trust wallet)</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Transaction ID" name="transID">
-                                    <span class="md-line"></span>
-                                </div>
-                                <div class="row m-t-30">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Submit.</button>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <p class="text-inverse text-left m-b-0">Thank you and Doing Business With Us.</p>
-                                        <p class="text-inverse text-left"><b>Hustlersbay</b></p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- end of form -->
-                    </div>
-                    <!-- Authentication card end -->
-                </div>
-                <!-- end of col-sm-12 -->
             </div>
-            <!-- end of row -->
         </div>
-       </div>
-   </div>
-</div>
-</div>
-</div>
-</div>
+    </div>
+<script type="text/javascript">
+    var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    /* Toggle between adding and removing the "active" class,
+    to highlight the button that controls the panel */
+    this.classList.toggle("active");
+
+    /* Toggle between hiding and showing the active panel */
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+} 
+</script>
+<style type="text/css">
+    /* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+}
+</style>
 {% endblock %}

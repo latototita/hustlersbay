@@ -20,7 +20,7 @@
         </div>
     </div>
 </div>
-<div class="pcoded-content">
+                    <div class="pcoded-content">
                         <div class="pcoded-inner-content">
 
                             <!-- Main-body start -->
@@ -64,350 +64,69 @@
                                             <div class="col-sm-12">
                                                 <!-- Typography card start -->
                                                 <div class="card">
-                                                    
                                                     <div class="card-block typography">
                                                         <div class="row">
                                                             <div class="col-sm-12 signup-card card-block auth-body mr-auto ml-auto">
-                                                                <form class="md-float-material"  method="POST">
-                            <div class="text-center">
-                                <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                            </div>
-                            <div class="auth-box">
-                                <div class="row m-b-20">
-                                    <div class="col-md-12">
-                                        <h3 class="text-center txt-primary">{{header}}.</h3>
-                                    </div>
-                                </div>
-                                <hr/>
-                                {% csrf_token %}
-                                <label  class="form-control">Amount in USD</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Amount in USD(US Dollars)" name="amount">
-                                    <span class="md-line"></span>
-                                </div>
-                                <label  class="form-control">Select Payment method</label>
-                                <div class="input-group">
-                                        <select class="form-control" name="method">
-                                            {% for i in category %}
-                                            <option value="{{ i.id }}">{{ i.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                </div>
-                                <label  class="form-control">Enter Wallet Address(Trc-20 etc) or Deposit Account(MTN/AIRTEL)</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Mobile Money Number starting with 256..." name="wallet">
-                                    <span class="md-line"></span>
-                                </div>
-                                <label  class="form-control">Transaction ID(Airtel,MTN),Hash(Trust wallet)</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Transaction ID" name="transID">
-                                    <span class="md-line"></span>
-                                </div>
-                                <div class="row m-t-30">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">{{button}}.</button>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <p class="text-inverse text-left m-b-0">Thank you and Doing Business With Us.</p>
-                                        <p class="text-inverse text-left"><b>Hustlersbay</b></p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                                                        <form class="md-float-material"  method="POST">
+                                                            <div class="text-center">
+                                                                <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
+                                                            </div>
+                                                            <div class="auth-box">
+                                                                <div class="row m-b-20">
+                                                                    <div class="col-md-12">
+                                                                        <h3 class="text-center txt-primary">{{header}}.</h3>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                {% csrf_token %}
+                                                                <label  class="form-control">Amount in USD</label>
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" placeholder="Amount in USD(US Dollars)" name="amount">
+                                                                    <span class="md-line"></span>
+                                                                </div>
+                                                                <label  class="form-control">Select Payment method</label>
+                                                                <div class="input-group">
+                                                                        <select class="form-control" name="method">
+                                                                            {% for i in category %}
+                                                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                </div>
+                                                                <label  class="form-control">Enter Wallet Address(Trc-20 etc) or Deposit Account(MTN/AIRTEL)</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="Mobile Money Number starting with 256..." name="wallet">
+                                                                    <span class="md-line"></span>
+                                                                </div>
+                                                                <label  class="form-control">Transaction ID(Airtel,MTN),Hash(Trust wallet)</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="Transaction ID" name="transID">
+                                                                    <span class="md-line"></span>
+                                                                </div>
+                                                                <div class="row m-t-30">
+                                                                    <div class="col-md-12">
+                                                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">{{button}}.</button>
+                                                                    </div>
+                                                                </div>
+                                                                <hr/>
+                                                                <div class="row">
+                                                                    <div class="col-md-10">
+                                                                        <p class="text-inverse text-left m-b-0">Thank you and Doing Business With Us.</p>
+                                                                        <p class="text-inverse text-left"><b>Hustlersbay</b></p>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- Typography card end -->
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!-- Text elements start -->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>text elements</h5>
-                                                        <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        <div class="card-header-right">                                                             <i class="icofont icofont-spinner-alt-5"></i>                                                         </div>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div class="row">
-                                                            <div class="col-sm-12 col-xl-6">
-                                                                <h4 class="sub-title">Inline text elements</h4>
-                                                                <p class="lead m-t-0">Your title goes here</p>
-                                                                <p>You can use the mark tag to
-                                                                    <mark>highlight</mark> text.</p>
-                                                                <p>
-                                                                    <del>This line of text is meant to be treated as deleted text.</del>
-                                                                </p>
-                                                                <p>
-                                                                    <ins>This line of text is meant to be treated as an addition to the document.</ins>
-                                                                </p>
-                                                                <p><strong>rendered as bold text</strong></p>
-                                                                <p><em>rendered as italicized text</em></p>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-6">
-                                                                <h4 class="sub-title">CONTEXTUAL TEXT COLORS</h4>
-                                                                <p class="text-custom">
-                                                                    Etiam porta sem malesuada magna mollis euismod.<code>text-custom</code>
-                                                                </p>
-                                                                <p class="text-pink">
-                                                                    Donec ullamcorper nulla non metus auctor fringilla.<code>text-pink</code>
-                                                                </p>
-                                                                <p class="text-muted">
-                                                                    Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.<code>text-muted</code>
-                                                                </p>
-                                                                <p class="text-primary">
-                                                                    Nullam id dolor id nibh ultricies vehicula ut id elit.<code>text-primary</code>
-                                                                </p>
-                                                                <p class="text-success">
-                                                                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.<code>text-success</code>
-                                                                </p>
-                                                                <p class="text-info">
-                                                                    Maecenas sed diam eget risus varius blandit sit amet non magna.<code>text-info</code>
-                                                                </p>
-                                                                <p class="text-warning">
-                                                                    Etiam porta sem malesuada magna mollis euismod.<code>text-warning</code>
-                                                                </p>
-                                                                <p class="text-danger">
-                                                                    Donec ullamcorper nulla non metus auctor fringilla.<code>text-danger</code>
-                                                                </p>
-                                                                <p class="text-dark">
-                                                                    Nullam id dolor id nibh ultricies vehicula ut id elit.<code>text-dark</code>
-                                                                </p>
-                                                                <p class="text-purple m-b-0">
-                                                                    Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.<code>text-purple</code>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Text elements end -->
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!-- List Tag card start -->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>List Tag</h5>
-                                                        <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        <div class="card-header-right">                                                             <i class="icofont icofont-spinner-alt-5"></i>                                                         </div>
-                                                    </div>
-                                                    <div class="card-block list-tag">
-                                                        <div class="row">
-                                                            <div class="col-sm-12 col-xl-4">
-                                                                <h4 class="sub-title">UNORDERED</h4>
-                                                                <ul>
-                                                                    <li>Lorem ipsum dolor sit amet</li>
-                                                                    <li>Consectetur adipiscing elit</li>
-                                                                    <li>Integer molestie lorem at massa</li>
-                                                                    <li>Facilisis in pretium nisl aliquet</li>
-                                                                    <li>Nulla volutpat aliquam velit
-                                                                        <ul>
-                                                                            <li>Phasellus iaculis neque</li>
-                                                                            <li>Purus sodales ultricies</li>
-                                                                            <li>Vestibulum laoreet porttitor sem</li>
-                                                                            <li>Ac tristique libero volutpat at</li>
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li>Faucibus porta lacus fringilla vel</li>
-                                                                    <li>Aenean sit amet erat nunc</li>
-                                                                    <li>Eget porttitor lorem</li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-4">
-                                                                <h4 class="sub-title">ORDERED</h4>
-                                                                <ol>
-                                                                    <li> Lorem ipsum dolor sit amet</li>
-                                                                    <li>Consectetur adipiscing elit</li>
-                                                                    <li>Integer molestie lorem at massa</li>
-                                                                    <li>Facilisis in pretium nisl aliquet</li>
-                                                                    <li>Nulla volutpat aliquam velit
-                                                                        <ol>
-                                                                            <li>Phasellus iaculis neque</li>
-                                                                            <li>Purus sodales ultricies</li>
-                                                                            <li>Vestibulum laoreet porttitor sem</li>
-                                                                            <li>Ac tristique libero volutpat at</li>
-                                                                        </ol>
-                                                                    </li>
-                                                                    <li>Faucibus porta lacus fringilla vel</li>
-                                                                    <li>Aenean sit amet erat nunc</li>
-                                                                    <li>Eget porttitor lorem</li>
-                                                                </ol>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-4">
-                                                                <h4 class="sub-title">UNSTYLED</h4>
-                                                                <div class="row col-sm-12">
-                                                                    <ul class="list-unstyled">
-                                                                        <li>Lorem ipsum dolor sit amet</li>
-                                                                        <li>Integer molestie lorem at massa</li>
-                                                                        <li>Phasellus iaculis neque</li>
-                                                                        <li>Faucibus porta lacus fringilla vel</li>
-                                                                        <li>Eget porttitor lorem</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="row col-sm-12">
-                                                                    <div class="inline-order-list">
-                                                                        <h4 class="sub-title">Inline</h4>
-                                                                        <p class="text-muted">
-                                                                            Place all list items on a single line with <code>
-                              display: inline-block;</code>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="card-block">
-                                                                        <ul class="list-inline m-b-0">
-                                                                            <li class="list-inline-item">Lorem ipsum</li>
-                                                                            <li class="list-inline-item">Phasellus iaculis</li>
-                                                                            <li class="list-inline-item">Nulla volutpat</li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- List Tag card end -->
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!-- Other card start -->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Other</h5>
-                                                        <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        <div class="card-header-right">                                                             <i class="icofont icofont-spinner-alt-5"></i>                                                         </div>
-                                                    </div>
-                                                    <div class="card-block list-tag">
-                                                        <div class="row">
-                                                            <div class="col-sm-12 col-xl-3">
-                                                                <h4 class="sub-title">Fancy listing 1</h4>
-                                                                <ul>
-                                                                    <li>
-                                                                        <i class="icofont icofont-bubble-right"></i> Lorem ipsum dolor sit amet
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-bubble-right"></i> Consectetur adipiscing elit
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-bubble-right"></i> Integer molestie lorem at massa
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-3">
-                                                                <h4 class="sub-title">Fancy listing 2</h4>
-                                                                <ul>
-                                                                    <li>
-                                                                        <i class="icofont icofont-double-right text-success"></i> Lorem ipsum dolor sit amet
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-double-right text-success"></i> Consectetur adipiscing elit
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-double-right text-success"></i> Integer molestie lorem at massa
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-3">
-                                                                <h4 class="sub-title">Fancy listing 2</h4>
-                                                                <ul>
-                                                                    <li>
-                                                                        <i class="icofont icofont-hand-right text-info"></i> Lorem ipsum dolor sit amet
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-hand-right text-info"></i> Consectetur adipiscing elit
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-hand-right text-info"></i> Integer molestie lorem at massa
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-3">
-                                                                <h4 class="sub-title">Fancy listing 2</h4>
-                                                                <ul>
-                                                                    <li>
-                                                                        <i class="icofont icofont-stylish-right text-danger"></i> Lorem ipsum dolor sit amet
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-stylish-right text-danger"></i> Consectetur adipiscing elit
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="icofont icofont-stylish-right text-danger"></i> Integer molestie lorem at massa
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Other card end -->
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Other</h5>
-                                                        <span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-                                                        <div class="card-header-right">                                                             <i class="icofont icofont-spinner-alt-5"></i>                                                         </div>
-                                                    </div>
-                                                    <div class="card-block">
-                                                        <div class="row">
-                                                            <div class="col-sm-12 col-xl-6">
-                                                                <h4 class="sub-title">BLOCKQUOTES</h4>
-                                                                <p class="text-muted m-b-30">
-                                                                    Your awesome text goes here.
-                                                                </p>
-                                                                <blockquote class="blockquote">
-                                                                    <p class="m-b-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                                                    <footer class="blockquote-footer">Someone famous in
-                                                                        <cite title="Source Title">Source Title</cite>
-                                                                    </footer>
-                                                                </blockquote>
-                                                                <p class="text-muted m-b-15 m-t-20">
-                                                                   For a blockquote with right-aligned content.
-                                                                </p>
-                                                                <blockquote class="blockquote blockquote-reverse">
-                                                                    <p class="m-b-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                                                    <footer class="blockquote-footer">Someone famous in
-                                                                        <cite title="Source Title">Source Title</cite>
-                                                                    </footer>
-                                                                </blockquote>
-                                                            </div>
-                                                            <div class="col-sm-12 col-xl-6">
-                                                                <h4 class="sub-title">HORIZONTAL DESCRIPTION</h4>
-                                                                <dl class="dl-horizontal row">
-                                                                    <dt class="col-sm-3">Description lists</dt>
-                                                                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
-                                                                    <dt class="col-sm-3">Euismod</dt>
-                                                                    <dd class="col-sm-9">Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
-                                                                    <dd class="col-sm-12 col-sm-offset-3">Donec id elit non mi porta gravida at eget metus.</dd>
-                                                                    <dt class="col-sm-3">Malesuada porta</dt>
-                                                                    <dd class="col-sm-9">Etiam porta sem malesuada magna mollis euismod.</dd>
-                                                                    <dt class="col-sm-3 text-truncate">Truncated term is truncated</dt>
-                                                                    <dd class="col-sm-9">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
-                                                                </dl>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <!-- Page-body end -->
                                 </div>
-                            </div>
-                            <!-- Main-body end -->
                             <div id="styleSelector">
 
                             </div>
@@ -417,102 +136,4 @@
             </div>
         </div>
     </div>
-    <!-- Pre-loader end -->
-    <section class="login p-fixed d-flex text-center bg-primary common-img-bg">
-        <!-- Container-fluid starts -->
-        <div class="container-fluid">
-            <div class="row">
-
-                <div class="col-md-12 col-xl-6">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                     <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>How to deposit on Hustlersbay</h5>
-                            <span>Deposits are manual to avoid loss of money due to hackers</span>
-                        </div>
-                        <div class="card-block">
-                            <p>Fill the form Bellow with the following;</p>
-                                                   
-                            <p>Send a specific amount of money  to the Company wallet Address</p> 
-                            <p>Copy the transaction ID(MTN,AIRTEL AND BINANCE) or Hash ID(Trust wallet) and Fill </p> 
-                             
-                            <p></p> 
-                            <p></p> 
-                        </div>
-                    </div>
-                </div>
-                           
-                <div class="col-md-12 col-xl-6">
-                    <!-- Authentication card start -->
-                    <div class="signup-card card-block auth-body mr-auto ml-auto">
-                        <br>
-                                  <br>
-                                  <br>
-                        <form class="md-float-material"  method="POST">
-                            <div class="text-center">
-                                <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                            </div>
-                            <div class="auth-box">
-                                <div class="row m-b-20">
-                                    <div class="col-md-12">
-                                        <h3 class="text-center txt-primary">{{header}}.</h3>
-                                    </div>
-                                </div>
-                                <hr/>
-                                {% csrf_token %}
-                                <label  class="form-control">Amount in USD</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" placeholder="Amount in USD(US Dollars)" name="amount">
-                                    <span class="md-line"></span>
-                                </div>
-                                <label  class="form-control">Select Payment method</label>
-                                <div class="input-group">
-                                        <select class="form-control" name="method">
-                                            {% for i in category %}
-                                            <option value="{{ i.id }}">{{ i.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                </div>
-                                <label  class="form-control">Enter Wallet Address(Trc-20 etc) or Deposit Account(MTN/AIRTEL)</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Mobile Money Number starting with 256..." name="wallet">
-                                    <span class="md-line"></span>
-                                </div>
-                                <label  class="form-control">Transaction ID(Airtel,MTN),Hash(Trust wallet)</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Transaction ID" name="transID">
-                                    <span class="md-line"></span>
-                                </div>
-                                <div class="row m-t-30">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">{{button}}.</button>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <p class="text-inverse text-left m-b-0">Thank you and Doing Business With Us.</p>
-                                        <p class="text-inverse text-left"><b>Hustlersbay</b></p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <img src="{% static 'assets/logo.jpg' %}" style="height:60px;width: 90px;" alt="logo.png">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- end of form -->
-                    </div>
-                    <!-- Authentication card end -->
-                </div>
-                <!-- end of col-sm-12 -->
-            </div>
-            <!-- end of row -->
-        </div>
-        <!-- end of container-fluid -->
-    </section>
 {% endblock %}

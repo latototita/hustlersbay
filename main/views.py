@@ -80,11 +80,6 @@ def index(request):
 def terms(request):
     context={}
     return render(request, 'terms .html',context)
-def transaction_id(request):
-    context={}
-    return render(request, 'dep.html',context)
-
-
 def depositrecord(request):
     try:
         lists=Deposit.objects.get(person=request.user.id)
@@ -161,6 +156,12 @@ def withdrawals(request):
 def transaction_id(request):
     if request.method=="POST":
         transID=request.POST.get('transID')
+        try:
+            txt_random=Deposit.objects.get(txt_random=txt_random)
+        except:
+            return redirect('deposit')
+        txt_random.transID=transID
+        txt_random.save()
     context={}
     return render(request, 'dep.html',context)
 
