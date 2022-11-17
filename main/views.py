@@ -9,6 +9,7 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 import random
+from django.contrib.auth.hashers import make_password
 #from .pay import PayClass 
 # Create your views here.
 
@@ -79,6 +80,9 @@ def index(request):
 def terms(request):
     context={}
     return render(request, 'terms .html',context)
+def transaction_id(request):
+    context={}
+    return render(request, 'dep.html',context)
 
 
 def depositrecord(request):
@@ -153,12 +157,18 @@ def withdrawals(request):
         form=Withdrawal_Form_New()
     context={'form':form,'header':'Withdrawal Form','button':'WIthdraw'}
     return render(request,'withdep.html',context)
+
+def transaction_id(request):
+    if request.method=="POST":
+        transID=request.POST.get('transID')
+    context={}
+    return render(request, 'dep.html',context)
+
 def deposit(request):
     if request.method=="POST":
         amount=request.POST.get('amount')
         wallet=request.POST.get('wallet')
         method=request.POST.get('method')
-        transID=request.POST.get('transID')
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
         '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
                     if callPay["response"]==200 or callPay["response"]==202:
@@ -223,7 +233,7 @@ def signup(response):
                 return render(response,'sign-up.html')
             Referreds=Referred(personwhorefferred=referral_code,personrefferred=username)
             Referreds.save()
-            form=User(username=username,password=password,email=email)
+            form=User(username=username,password=make_password(password),email=email)
             form.save()
             messages.success(response, f'Successfully Registered,Please log into your Account to Make Orders')
             return redirect('login')
