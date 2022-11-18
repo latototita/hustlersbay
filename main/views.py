@@ -154,14 +154,21 @@ def withdrawals(request):
     return render(request,'withdep.html',context)
 
 def transaction_id(request):
+    txt_random = request.session.get('txt_random_session')
+    if not txt_random:
+        messages.success(request, 'Please First fill in this Deposit Form')
+        return redirect('deposit')
+    print(txt_random)
     if request.method=="POST":
         transID=request.POST.get('transID')
         try:
-            txt_random=Deposit.objects.get(txt_random=txt_random)
+            txt=Deposit.objects.get(txt_random=txt_random)
         except:
             return redirect('deposit')
-        txt_random.transID=transID
-        txt_random.save()
+        txt.transID=transID
+        txt.save()
+        messages.success(request, 'Deposit made Successfully, Account Balance shall be updated Soon')
+        return redirect('index')
     context={}
     return render(request, 'dep.html',context)
 
@@ -171,6 +178,9 @@ def deposit(request):
         wallet=request.POST.get('wallet')
         method=request.POST.get('method')
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
+        txt_random_session = request.session.get('txt_random_session')
+        if not txt_random_session:
+            request.session['txt_random_session'] = 'txt_random'
         '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
                     if callPay["response"]==200 or callPay["response"]==202:
                         verify = PayClass.verifymomo(callPay["ref"])
@@ -180,7 +190,7 @@ def deposit(request):
         
                     else:
                         messages.success(response, f'Problem with the System')'''
-        feed_back=Deposit(person=request.user.id,wallet=wallet,amount=amount,transID=transID,method=method,txt_random=txt_random,date_deposit=datetime.datetime.today())
+        feed_back=Deposit(person=request.user.id,wallet=wallet,amount=amount,transID='None',method=method,txt_random=txt_random,date_deposit=datetime.datetime.today())
         feed_back.save()
         return redirect('index')
             
