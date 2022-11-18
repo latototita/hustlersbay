@@ -1,0 +1,54 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="pcoded">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!-- Basic table card start -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic table</h5>
+                        <a href="/admin/"><span>Dashboard</span></a>
+                        <div class="card-header-right">    <ul class="list-unstyled card-option">        <li><i class="icofont icofont-simple-left "></i></li>        <li><i class="icofont icofont-maximize full-card"></i></li>        <li><i class="icofont icofont-minus minimize-card"></i></li>        <li><i class="icofont icofont-refresh reload-card"></i></li>        <li><i class="icofont icofont-error close-card"></i></li>    </ul></div>
+                    </div>
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Person</th>
+                                        <th>Amount</th>
+                                        <th>Method</th>
+                                        <th>TransID</th>
+                                        <th>txt_random</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for brand in deposits %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ brand.person }}</td>
+                                        <td>{{ brand.amount }}</td>
+                                        <td>{{ brand.method.name }}</td>
+                                        <td>{{ brand.transID }}</td>
+                                        <td>{{ brand.txt_random }}</td>
+                                        <td>{{ brand.date_deposit }}</td>
+                                        <td><a href="{% url 'deposit_update' brand.id %}" class="btn btn-primary">
+                                        <i class="fa fa-edit">{{ brand.status }}</i>
+                                        </a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Basic table card end -->
+{% endblock %}

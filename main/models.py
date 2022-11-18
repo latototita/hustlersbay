@@ -10,7 +10,7 @@ class Balance(models.Model):
 	amount= models.CharField(max_length=1000)
 	date_deposited =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
-		return self.person
+		return self.amount
 
 	class Meta:
 		ordering = ('-date_deposited', )

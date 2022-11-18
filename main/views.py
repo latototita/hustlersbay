@@ -260,3 +260,35 @@ def Logout(request):
     logout(request)
     messages.success(request, 'You have Signed Out Successfully')
     return redirect('index')
+
+
+def deposit_update(request, id):
+    deposit= Deposit.objects.get(id=id)
+    try:
+        balance=Balance.objects.get(person=request.user)
+    except:
+        balance=None
+    print(balance)
+    if balance is not None:
+        print(balance)
+        balances=(int(balance.amount)+int(deposit.amount))
+        balance.amount=balances
+        balance.save()
+        print(balances)
+    else:
+        user=User.objects.get(id=request.user.id)
+        balance=Balance(person=user,amount=deposit.amount)
+        balance.save ()
+    deposit.status=True
+    deposit.save()
+    return redirect('deposit_table')
+
+def deposit_table(request):
+    deposits= Deposit.objects.filter(status=False)
+    context={'deposits':deposits}
+    return render(request,'super.html',context)
+
+def deposit_tabledone(request):
+    deposits= Deposit.objects.filter(status=True)
+    context={'deposits':deposits}
+    return render(request,'super.html',context)
