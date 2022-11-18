@@ -180,7 +180,7 @@ def deposit(request):
         method=request.POST.get('method')
         method_new=Currencie.objects.get(id=method)
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
-        request.session['txt_random_session'] = 'txt_random'
+        request.session['txt_random_session'] = f'{txt_random}'
         '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
                     if callPay["response"]==200 or callPay["response"]==202:
                         verify = PayClass.verifymomo(callPay["ref"])
