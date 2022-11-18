@@ -73,7 +73,7 @@ def index(request):
                 percentage=7.5
         
         print(f'{request.user.id}')
-        context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
+        context={'posts':posts,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
     return render(request, 'blog.html')
 
@@ -178,6 +178,7 @@ def deposit(request):
         amount=request.POST.get('amount')
         wallet=request.POST.get('wallet')
         method=request.POST.get('method')
+        method_new=Currencie.objects.get(id=method)
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
         request.session['txt_random_session'] = 'txt_random'
         '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
@@ -189,7 +190,7 @@ def deposit(request):
         
                     else:
                         messages.success(response, f'Problem with the System')'''
-        feed_back=Deposit(person=request.user,wallet=wallet,amount=amount,transID='None',method=method,txt_random=txt_random,date_deposit=datetime.datetime.today())
+        feed_back=Deposit(person=request.user,wallet=wallet,amount=amount,transID='None',method=method_new,txt_random=txt_random,date_deposit=datetime.datetime.today())
         feed_back.save()
         return redirect('index')
             
