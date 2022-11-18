@@ -169,6 +169,7 @@ def transaction_id(request):
         txt.transID=transID
         txt.save()
         messages.success(request, 'Deposit made Successfully, Account Balance shall be updated Soon')
+        request.session['txt_random_session']=''
         return redirect('index')
     context={}
     return render(request, 'dep.html',context)

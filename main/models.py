@@ -7,7 +7,7 @@ import datetime
 
 class Balance(models.Model):
 	person = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-	amount= models.CharField(max_length=12)
+	amount= models.CharField(max_length=1000)
 	date_deposited =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
 		return self.person
@@ -16,28 +16,28 @@ class Balance(models.Model):
 		ordering = ('-date_deposited', )
 
 class Currencie(models.Model):
-	name = models.CharField(max_length=12)
+	name = models.CharField(max_length=1000)
 	def __str__(self):
 		return self.name
 class Withdrawal(models.Model):
-	person = models.CharField(max_length=12)
+	person = models.CharField(max_length=1000)
 	date_withdraw =models.DateTimeField(default=datetime.datetime.today)
-	amount= models.CharField(max_length=12)
+	amount= models.CharField(max_length=1000)
 	currency=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
-	phone =models.CharField(max_length=12, default=1)
-	txt_random=models.CharField(max_length=12,default=1)
+	phone =models.CharField(max_length=1000, default=1)
+	txt_random=models.CharField(max_length=1000,default=1)
 	def __str__(self):
 		return self.person
 
 	class Meta:
 		ordering = ('-date_withdraw', )
 class Deposit(models.Model):
-	person = models.CharField(max_length=12)
-	amount= models.CharField(max_length=12)
+	person = models.CharField(max_length=1000)
+	amount= models.CharField(max_length=1000)
 	method=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
-	wallet =models.CharField(max_length=12, default=1)
-	transID =models.CharField(max_length=12, default=1)
-	txt_random=models.CharField(max_length=12, default=1)
+	wallet =models.CharField(max_length=1000, default=1)
+	transID =models.CharField(max_length=1000, default=1)
+	txt_random=models.CharField(max_length=1000, default=1)
 	date_deposit =models.DateTimeField(default=datetime.datetime.today)
 	status=models.BooleanField(default=False)
 	def __str__(self):
@@ -47,7 +47,7 @@ class Deposit(models.Model):
 		ordering = ('-date_deposit', )
 
 class Earning(models.Model):
-	person = models.CharField(max_length=12)
+	person = models.CharField(max_length=1000)
 	amount= models.CharField(max_length=15)
 	time_earned =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
@@ -58,7 +58,7 @@ class Earning(models.Model):
 
 class Referred(models.Model):
 	personwhorefferred =  models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-	personrefferred= models.CharField(max_length=12)
+	personrefferred= models.CharField(max_length=1000)
 	date_refferred =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
 		return self.personrefferred
@@ -67,7 +67,7 @@ class Referred(models.Model):
 		ordering = ('-date_refferred', )
 
 class ReferralBonu(models.Model):
-	person = models.CharField(max_length=12)
+	person = models.CharField(max_length=1000)
 	paid= models.BooleanField(default=False)
 	date_pained =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
