@@ -75,3 +75,15 @@ class ReferralBonu(models.Model):
 
 	class Meta:
 		ordering = ('-date_pained', )
+
+class Post(models.Model):
+    image=models.ImageField(upload_to='posts',blank=True)
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=datetime.datetime.today)
+
+    class Meta:
+        ordering = ('-date_posted', )
+
+    def __str__(self):
+        return self.title

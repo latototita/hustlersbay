@@ -14,6 +14,7 @@ from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 def index(request):
+    posts=Post.objects.all()
     today = datetime.date.today()
     timetoday=timezone.now
     results=request.GET.get("kw")
@@ -139,19 +140,19 @@ def withdrawals(request):
                                 print("Notification recieved")
 
                         else:
-                            print("Problem withdraw")
+                            print("Problem withdraw") 
                     else:
                         a = date.today()
                         b = date(2023, 12, 31)
                         delta = b - a
                         print(delta.days, "days left in this year")
+
     try:
-        withdraw=Withdrawal.objects.get(person=request.user.id)
-        form=Withdrawal_Form_Customer()
+        category=Currencie.objects.all()
     except:
-        form=Withdrawal_Form_New()
-    context={'form':form,'header':'Withdrawal Form','button':'WIthdraw'}
-    return render(request,'withdep.html',context)
+        category=[]
+    context={'category':category,'header':'Withdrawal Form','button':'WIthdraw'}
+    return render(request,'with.html',context)
 
 def transaction_id(request):
     txt_random = request.session.get('txt_random_session')
