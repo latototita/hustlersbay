@@ -75,7 +75,8 @@ def index(request):
         print(f'{request.user.id}')
         context={'posts':posts,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
-    return render(request, 'blog.html')
+    context={'posts':posts}
+    return render(request, 'blog.html',context)
 
 
 def terms(request):

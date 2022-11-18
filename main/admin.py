@@ -16,7 +16,10 @@ class AdminDeposit(admin.ModelAdmin):
 
 class AdminReferralBonus(admin.ModelAdmin):
     list_display = ['person']
+class AdminPost(admin.ModelAdmin):
+    list_display = ['title']
 
+admin.site.register(Post, AdminPost)
 admin.site.register(Balance, AdminBalance)
 admin.site.register(Currencie, AdminCurrency)
 admin.site.register(Withdrawal , AdminWithdrawal)

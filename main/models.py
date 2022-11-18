@@ -78,7 +78,8 @@ class ReferralBonu(models.Model):
 
 class Post(models.Model):
     image=models.ImageField(upload_to='posts',blank=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=1000,default='None')
+    link = models.CharField(max_length=1000,default='None')
     content = models.TextField()
     date_posted = models.DateTimeField(default=datetime.datetime.today)
 
