@@ -192,7 +192,7 @@ def deposit(request):
                         messages.success(response, f'Problem with the System')'''
         feed_back=Deposit(person=request.user,wallet=wallet,amount=amount,transID='None',method=method_new,txt_random=txt_random,date_deposit=datetime.datetime.today())
         feed_back.save()
-        return redirect('index')
+        return redirect('transaction_id')
             
     try:
         category=Currencie.objects.all()
