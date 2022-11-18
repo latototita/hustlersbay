@@ -20,7 +20,7 @@ class Currencie(models.Model):
 	def __str__(self):
 		return self.name
 class Withdrawal(models.Model):
-	person = models.CharField(max_length=12,unique=True)
+	person = models.CharField(max_length=12)
 	date_withdraw =models.DateTimeField(default=datetime.datetime.today)
 	amount= models.CharField(max_length=12)
 	currency=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
@@ -32,7 +32,7 @@ class Withdrawal(models.Model):
 	class Meta:
 		ordering = ('-date_withdraw', )
 class Deposit(models.Model):
-	person = models.CharField(max_length=12,unique=True)
+	person = models.CharField(max_length=12)
 	amount= models.CharField(max_length=12)
 	method=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
 	wallet =models.CharField(max_length=12, default=1)
@@ -47,7 +47,7 @@ class Deposit(models.Model):
 		ordering = ('-date_deposit', )
 
 class Earning(models.Model):
-	person = models.CharField(max_length=12,unique=True)
+	person = models.CharField(max_length=12)
 	amount= models.CharField(max_length=15)
 	time_earned =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
@@ -67,7 +67,7 @@ class Referred(models.Model):
 		ordering = ('-date_refferred', )
 
 class ReferralBonu(models.Model):
-	person = models.CharField(max_length=12,unique=True)
+	person = models.CharField(max_length=12)
 	paid= models.BooleanField(default=False)
 	date_pained =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
