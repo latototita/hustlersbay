@@ -19,7 +19,7 @@ class RegistrationForm(UserCreationForm):
 	class Meta:
 		model=User
 		fields=["username","email","password1","password2"]
-
+'''
 
 class Withdrawal_Form_Customer(ModelForm):
 	class Meta:
@@ -36,7 +36,7 @@ class Withdrawal_Form_New(ModelForm):
 	amount=forms.CharField(label='MTN Account Registration Name',required=False)
 	#amount = forms.CharField(required=True,label='Amount in Dollars eg.$10',)
 	phone = forms.CharField(required=True,label="Do not Put a plus Sign,eg.'256..','254'",)
-'''
+
 class Deposit_Form(forms.ModelForm):
 
 	class Meta:

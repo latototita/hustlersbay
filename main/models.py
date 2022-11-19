@@ -6,7 +6,7 @@ from datetime import date
 import datetime
 
 class Balance(models.Model):
-	person = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+	person = models.CharField(max_length=1000)
 	amount= models.CharField(max_length=1000)
 	date_deposited =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
@@ -23,9 +23,10 @@ class Withdrawal(models.Model):
 	person = models.CharField(max_length=1000)
 	date_withdraw =models.DateTimeField(default=datetime.datetime.today)
 	amount= models.CharField(max_length=1000)
-	currency=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
+	method=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
 	phone =models.CharField(max_length=1000, default=1)
 	txt_random=models.CharField(max_length=1000,default=1)
+	status=models.BooleanField(default=False)
 	def __str__(self):
 		return self.person
 
