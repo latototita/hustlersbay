@@ -99,54 +99,54 @@ def withdrawrecord(request):
      
 def withdrawals(request):
     if request.method=="POST":
-        try:
-            deposit=Deposit.objects.get(person=request.user.id)
-        except:
-            form=Deposit_Form(request.POST)
-        if form.is_valid():
-            if Withdrawal.objects.filter(person=request.user.id):
-                balance=Balance.objects.get(person=request.user.id)
-                Balance=balance.amount
+        amount=request.POST.get('amount')
+        wallet=request.POST.get('wallet')
+        method=request.POST.get('method')
+        method_new=Currencie.objects.get(id=method)
+        txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
+        if Withdrawal.objects.filter(person=request.user.id):
+            balance=Balance.objects.get(person=request.user.id)
+            Balance=balance.amount
+            try:
+                withdrawamount=Withdrawal.objects.get(person=request.user.id)
+                withdrawaldate=withdrawamount.date_withdraw
+            except:
+                withdrawamount=None
+            if withdrawaldate != None:
                 try:
-                    withdrawamount=Withdrawal.objects.get(person=request.user.id)
-                    withdrawaldate=withdrawamount.date_withdraw
+                    new_withdrawaldate=(date.today()-withdrawaldate)
                 except:
-                    withdrawamount=None
-                if withdrawaldate != None:
-                    try:
-                        new_withdrawaldate=(date.today()-withdrawaldate)
-                    except:
-                        new_withdrawaldate=0
-                if new_withdrawaldate<6:
-                    if amount<=((25/100)*Balance):
-                        withdrawmoney = PayClass.withdrawmtnmomo(amount, currency, txt_random, phone, message)
-                        if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
-                            CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
-                            print(CheckWithdrawStatus["status"])
-                            if CheckWithdrawStatus["status"]=="SUCCESSFUL":
-                                print("Notification recieved")
+                    new_withdrawaldate=0
+            if new_withdrawaldate<6:
+                if amount<=((25/100)*Balance):
+                    '''withdrawmoney = PayClass.withdrawmtnmomo(amount, currency, txt_random, phone, message)
+                    if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
+                        CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
+                        print(CheckWithdrawStatus["status"])
+                        if CheckWithdrawStatus["status"]=="SUCCESSFUL":
+                            print("Notification recieved")
 
-                        else:
-                            print("Problem withdraw")
                     else:
-                        messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')
+                        print("Problem withdraw")
                 else:
+                    messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')'''
+            else:
 
-                    if amount_withdrawal<=((80/100)*Balance):
-                        withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
-                        if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
-                            CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
-                            print(CheckWithdrawStatus["status"])
-                            if CheckWithdrawStatus["status"]=="SUCCESSFUL":
-                                print("Notification recieved")
+                if amount_withdrawal<=((80/100)*Balance):
+                    '''withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
+                    if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
+                        CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
+                        print(CheckWithdrawStatus["status"])
+                        if CheckWithdrawStatus["status"]=="SUCCESSFUL":
+                            print("Notification recieved")
 
-                        else:
-                            print("Problem withdraw") 
                     else:
-                        a = date.today()
-                        b = date(2023, 12, 31)
-                        delta = b - a
-                        print(delta.days, "days left in this year")
+                        print("Problem withdraw")'''
+                else:
+                    '''a = date.today()
+                    b = date(2023, 12, 31)
+                    delta = b - a
+                    print(delta.days, "days left in this year")'''
 
     try:
         category=Currencie.objects.all()
@@ -278,7 +278,21 @@ def deposit_update(request, id):
     else:
         user=User.objects.get(id=request.user.id)
         balance=Balance(person=user,amount=deposit.amount)
-        balance.save ()
+        balance.save()
+    try:
+        reffered=Referred.objects.filter(personrefferred=request.user.username).filter(paid=False)
+    except:
+        reffered=None
+    if reffered is not None:
+        name=reffered.personwhorefferred.username
+        name2=User.objects.get(username=name)
+        payingUser=Balance.objects.get(person=name2)
+        bonus=((7/100)*int(deposit.amount))
+        newbalance=(int(payingUser.amount)+int(bonus))
+        refferalbonus=ReferralBonu(person=request.user,amount=bonus,paid=True)
+        refferalbonus.save()
+        payingUser.amount=newbalance
+        payingUser.save()
     deposit.status=True
     deposit.save()
     return redirect('deposit_table')

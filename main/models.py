@@ -60,6 +60,7 @@ class Referred(models.Model):
 	personwhorefferred =  models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 	personrefferred= models.CharField(max_length=1000)
 	date_refferred =models.DateTimeField(default=datetime.datetime.today)
+	paid=models.BooleanField(default=False)
 	def __str__(self):
 		return self.personrefferred
 
@@ -67,7 +68,8 @@ class Referred(models.Model):
 		ordering = ('-date_refferred', )
 
 class ReferralBonu(models.Model):
-	person = models.CharField(max_length=1000)
+	person = models.CharField(max_length=1000,default=0)
+	amount= models.CharField(max_length=1000,default=12)
 	paid= models.BooleanField(default=False)
 	date_pained =models.DateTimeField(default=datetime.datetime.today)
 	def __str__(self):
