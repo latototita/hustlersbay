@@ -31,18 +31,20 @@ def index(request):
             else:
                 print(money_new_new)
                 money=float(money_new_new.amount)
-                if  10>=money<150:
-                    money_new=((4/100)*money+money)
-                elif 151>=money<=350:
-                    money_new=((4.5/100)*money+money)
-                elif 351>=money<=750:
-                    money_new=((5.2/100)*money+money)
-                elif 751>=money<=1250:
-                    money_new=((6.1/100)*money+money)
-                elif 1251>=money<=2000:
-                    money_new=((7.5/100)*money+money)
-                money_new=round(money_new, -2)
-                money_new_new.amount=str(money_new)
+                if  10<=money<=150:
+                    money_new=(((4/100)*money)+money)
+                    print(money_new)
+                elif 151<=money<=350:
+                    money_new=(((4.5/100)*money)+money)
+                elif 351<=money<=750:
+                    money_new=(((5.2/100)*money)+money)
+                elif 751<=money<=1250:
+                    money_new=(((6.1/100)*money)+money)
+                elif 1251<=money<=2000:
+                    money_new=(((7.5/100)*money)+money)
+                print(money_new)
+                money_new_new.amount=str(round(money_new, 1))
+                print(money_new)
                 money_new_new.date_deposited=datetime.datetime.today()
                 money_new_new.save()
         try:
@@ -71,7 +73,8 @@ def index(request):
                 percentage=6.1
             elif 1251>=money<=2000:
                 percentage=7.5
-        
+        else:
+            percentage=4
         print(f'{request.user.id}')
         context={'posts':posts,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
