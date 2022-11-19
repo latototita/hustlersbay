@@ -19,11 +19,11 @@ def index(request):
     timetoday=timezone.now
     results=request.GET.get("kw")
     if request.user.is_authenticated:
-        if Balance.objects.filter(date_deposited__gte=today).filter(person=request.user.id):
+        if Balance.objects.filter(date_deposited__gte=today).filter(person=request.user.username):
             pass
         else:
             try:
-                money_new_new=Balance.objects.get(person=request.user.id)
+                money_new_new=Balance.objects.get(person=request.user.username)
             except:
                 money_new_new=None
             if money_new_new is None:
@@ -46,7 +46,7 @@ def index(request):
                 money_new_new.date_deposited=datetime.datetime.today()
                 money_new_new.save()
         try:
-            balance=Balance.objects.get(person=request.user.id)
+            balance=Balance.objects.get(person=request.user.username)
         except:
             balance=0
             percentage=0
@@ -58,7 +58,7 @@ def index(request):
             lists_of_top_balances=[]
             lists_of_top_disposites=[]
             lists_of_top_withdraws=[]
-        if float(balance>0):
+        if float(balance.amount)>0:
             money=float(balance.amount)
             balance=balance.amount
             if  10>=money<150:
