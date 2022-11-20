@@ -60,21 +60,22 @@ def index(request):
             lists_of_top_balances=[]
             lists_of_top_disposites=[]
             lists_of_top_withdraws=[]
-        if float(balance.amount)>0:
-            money=float(balance.amount)
-            balance=balance.amount
-            if  10>=money<150:
-                percentage=4
-            elif 151>=money<=350:
-                percentage=4.5
-            elif 351>=money<=750:
-                percentage=5.2
-            elif 751>=money<=1250:
-                percentage=6.1
-            elif 1251>=money<=2000:
-                percentage=7.5
-        else:
-            percentage=4
+        if balance!=0:
+            if float(balance.amount)>0:
+                money=float(balance.amount)
+                balance=balance.amount
+                if  10>=money<150:
+                    percentage=4
+                elif 151>=money<=350:
+                    percentage=4.5
+                elif 351>=money<=750:
+                    percentage=5.2
+                elif 751>=money<=1250:
+                    percentage=6.1
+                elif 1251>=money<=2000:
+                    percentage=7.5
+            else:
+                percentage=0
         print(f'{request.user.id}')
         context={'posts':posts,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
@@ -279,21 +280,20 @@ def deposit_update(request, id):
         balance.save()
         print(balances)
     else:
-        user=User.objects.get(id=request.user.id)
+        user=User.objects.get(username=deposit.person)
         balance=Balance(person=user,amount=deposit.amount)
         balance.save()
     try:
-        reffered=Referred.objects.get(personrefferred=request.user.username)
+        reffered=Referred.objects.get(personrefferred=deposit.person)
     except:
         reffered=None
     if reffered is not None:
         if reffered.paid==False:
             name=reffered.personwhorefferred
-            name2=User.objects.get(username=name)
-            payingUser=Balance.objects.get(person=name2)
+            payingUser=Balance.objects.get(person=name)
             bonus=((7/100)*float(deposit.amount))
             newbalance=(float(payingUser.amount)+float(bonus))
-            refferalbonus=ReferralBonu(person=request.user,amount=bonus,paid=True)
+            refferalbonus=ReferralBonu(person=deposit.person,amount=bonus,paid=True)
             refferalbonus.save()
             payingUser.amount=newbalance
             payingUser.save()

@@ -58,7 +58,7 @@ class Earning(models.Model):
 		ordering = ('-time_earned', )
 
 class Referred(models.Model):
-	personwhorefferred =  models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+	personwhorefferred = models.CharField(max_length=1000,default=0)
 	personrefferred= models.CharField(max_length=1000)
 	date_refferred =models.DateTimeField(default=datetime.datetime.today)
 	paid=models.BooleanField(default=False)
