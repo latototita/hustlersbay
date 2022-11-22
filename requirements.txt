@@ -11,4 +11,5 @@ django-crispy-forms==1.14.0
 django-multiselectfield==0.1.12
 django-nvd3==0.9.7
 Pillow==9.1.1
+coinbase-commerce==1.0.1
 
