@@ -420,12 +420,12 @@ def coinbase_webhook(request):
 
         if event['type'] == 'charge:confirmed':
             logger.info('Payment confirmed.')
-            '''amount = event['data']['metadata']['amount']
+            amount = event['data']['metadata']['amount']
             txt_random = event['data']['metadata']['txt_random']
             date_deposit = event['data']['metadata']['date_deposit']
             request_user = event['data']['metadata']['request_user']
 
-            if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
+            '''if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
                 try:
                     balance=Balance.objects.get(person=request_user)
                 except:
