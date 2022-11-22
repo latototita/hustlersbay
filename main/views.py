@@ -160,7 +160,7 @@ def withdrawals(request):
                 else:
                     print("Problem withdraw")
             else:
-                messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')'''
+                messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')
         else:
 
             if amount_withdrawal<=((80/100)*Balance):
@@ -170,7 +170,7 @@ def withdrawals(request):
                 balance.save()
                 withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
                 withdrawal.save()
-                '''withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
+                withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
                 if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
                     CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
                     print(CheckWithdrawStatus["status"])
@@ -178,13 +178,14 @@ def withdrawals(request):
                         print("Notification recieved")
 
                 else:
-                    print("Problem withdraw")'''
+                    print("Problem withdraw")
             else:
                 pass
-                '''a = date.today()
+                a = date.today()
                 b = date(2023, 12, 31)
                 delta = b - a
-                print(delta.days, "days left in this year")'''
+                print(delta.days, "days left in this year")
+                '''
 
     try:
         category=Wallet.objects.all()
@@ -419,7 +420,7 @@ def coinbase_webhook(request):
 
         if event['type'] == 'charge:confirmed':
             logger.info('Payment confirmed.')
-            amount = event['data']['metadata']['amount']
+            '''amount = event['data']['metadata']['amount']
             txt_random = event['data']['metadata']['txt_random']
             date_deposit = event['data']['metadata']['date_deposit']
             request_user = event['data']['metadata']['request_user']
@@ -456,7 +457,7 @@ def coinbase_webhook(request):
 
                 deposit=Deposit.objects.get(person=request_user)
                 deposit.status=True
-                deposit.save()
+                deposit.save()'''
 
     except (SignatureVerificationError, WebhookInvalidPayload) as e:
         return HttpResponse(e, status=400)
