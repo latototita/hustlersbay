@@ -72,7 +72,9 @@ def index(request):
             lists_of_top_balances=[]
             lists_of_top_disposites=[]
             lists_of_top_withdraws=[]
-        if balance is not 0:
+        if balance==0:
+            pass
+        else:
             if float(balance.amount)>0:
                 money=float(balance.amount)
                 balance=balance.amount
