@@ -20,6 +20,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 import json
 from scumtrader import settings
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 from django.contrib.auth.hashers import make_password
 #from .pay import PayClass 
@@ -106,6 +108,8 @@ def index(request):
 def terms(request):
     context={}
     return render(request, 'terms .html',context)
+
+@login_required
 def depositrecord(request):
     try:
         lists=Deposit.objects.filter(person=request.user.id)
@@ -113,6 +117,8 @@ def depositrecord(request):
         lists={}
     context={'lists':lists,'header':'Deposits Initiated Record'}
     return render(request, 'withdrawdepositrecord.html',context)
+
+@login_required
 def withdrawrecord(request):
     try:
         lists=Withdrawal.objects.filter(person=request.user.id)
@@ -158,7 +164,7 @@ def withdrawals(request):
                         print("Notification recieved")
 
                 else:
-                    print("Problem withdraw")
+                    print("Problem withdraw")'''
             else:
                 messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')
         else:
@@ -171,17 +177,17 @@ def withdrawals(request):
                 withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
                 withdrawal.save()
                 withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
-                if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
+                '''if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
                     CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
                     print(CheckWithdrawStatus["status"])
                     if CheckWithdrawStatus["status"]=="SUCCESSFUL":
                         print("Notification recieved")
 
                 else:
-                    print("Problem withdraw")
+                    print("Problem withdraw")'''
             else:
                 pass
-                a = date.today()
+                '''a = date.today()
                 b = date(2023, 12, 31)
                 delta = b - a
                 print(delta.days, "days left in this year")
@@ -193,7 +199,8 @@ def withdrawals(request):
         category=[]
     context={'category':category,'header':'Withdrawal Form','button':'WIthdraw'}
     return render(request,'with.html',context)
-
+'''
+@staff_member_required
 def transaction_id(request):
     txt_random = request.session.get('txt_random_session')
     if not txt_random:
@@ -213,7 +220,9 @@ def transaction_id(request):
         return redirect('index')
     context={}
     return render(request, 'dep.html',context)
+'''
 
+@login_required
 def deposit(request):
     if request.method=="POST":
         amount=request.POST.get('amount')
@@ -295,12 +304,12 @@ def signup(response):
     return render(response,'sign-up.html',context)
 
 
-@login_required(login_url='login')
+@login_required
 def Logout(request):
     logout(request)
     messages.success(request, 'You have Signed Out Successfully')
     return redirect('index')
-
+@staff_member_required
 def deposit_update(request,id):
     user=Deposit.objects.get(id=id)
     request_user=User.objects.get(username=user.person)
@@ -339,12 +348,12 @@ def deposit_update(request,id):
     deposit.save()
     return redirect('deposit_table')
 
-
+@staff_member_required
 def deposit_table(request):
     deposits= Deposit.objects.filter(status=False)
     context={'deposits':deposits}
     return render(request,'super.html',context)
-
+@staff_member_required
 def deposit_tabledone(request):
     deposits= Deposit.objects.filter(status=True)
     context={'deposits':deposits}
@@ -396,11 +405,13 @@ def pay_view(request):
 
 
 def success_view(request):
-    return render(request, 'success.html', {})
+    messages.success(request, f'Deposit Made Successfully.')
+    return redirect('index')
 
 
 def cancel_view(request):
-    return render(request, 'cancel.html', {})
+    messages.success(request, f'Deposit Cancelled Successfully.')
+    return redirect('index')
 
 
 @csrf_exempt
@@ -420,10 +431,10 @@ def coinbase_webhook(request):
 
         if event['type'] == 'charge:confirmed':
             logger.info('Payment confirmed.')
-            '''amount = event['data']['metadata']['amount']
+            amount = event['data']['metadata']['amount']
             txt_random = event['data']['metadata']['txt_random']
             date_deposit = event['data']['metadata']['date_deposit']
-            request_user = event['data']['metadata']['request_user']'''
+            request_user = event['data']['metadata']['request_user']
 
             if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
                 try:

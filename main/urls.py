@@ -13,7 +13,7 @@ urlpatterns = [
     path('success/', views.success_view, name='payments-success'),
     path('cancel/', views.cancel_view, name='payments-cancel'),
     path('webhook/', views.coinbase_webhook),
-    path('transaction_id', views.transaction_id, name='transaction_id'),
+    #path('transaction_id', views.transaction_id, name='transaction_id'),
     path('deposit_update/<int:id>/', views.deposit_update, name='deposit_update'),
     path('deposit_table', views.deposit_table, name='deposit_table'),
     path('depositrecord', views.depositrecord, name='depositrecord'),
