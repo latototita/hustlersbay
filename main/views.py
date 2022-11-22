@@ -47,13 +47,17 @@ def index(request):
                     money_new=(((4/100)*money)+money)
                     print(money_new)
                 elif 151<=money<=350:
-                    money_new=(((4.5/100)*money)+money)
+                    money_new=(((4.1/100)*money)+money)
                 elif 351<=money<=750:
-                    money_new=(((5.2/100)*money)+money)
+                    money_new=(((4.2/100)*money)+money)
                 elif 751<=money<=1250:
-                    money_new=(((6.1/100)*money)+money)
+                    money_new=(((4.3/100)*money)+money)
                 elif 1251<=money<=2000:
-                    money_new=(((7.5/100)*money)+money)
+                    money_new=(((4.4/100)*money)+money)
+                elif 2001<=money<=3000:
+                    money_new=(((4.412/100)*money)+money)
+                else:
+                    money_new=money
                 print(money_new)
                 money_new_new.amount=str(round(money_new, 1))
                 print(money_new)
@@ -81,13 +85,17 @@ def index(request):
                 if  10<=money<=150:
                     percentage=4
                 elif 151<=money<=350:
-                    percentage=4.2
+                    percentage=4.1
                 elif 351<=money<=750:
-                    percentage=4.4
+                    percentage=4.2
                 elif 751<=money<=1250:
-                    percentage=4.6
+                    percentage=4.3
                 elif 1251<=money<=2000:
-                    percentage=4.7
+                    percentage=4.4
+                elif 2001<=money<=3000:
+                    percentage=4.412
+                else:
+                    pass
         print(f'{request.user.id}')
         context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
@@ -100,72 +108,86 @@ def terms(request):
     return render(request, 'terms .html',context)
 def depositrecord(request):
     try:
-        lists=Deposit.objects.get(person=request.user.id)
+        lists=Deposit.objects.filter(person=request.user.id)
     except:
         lists={}
     context={'lists':lists,'header':'Deposits Initiated Record'}
     return render(request, 'withdrawdepositrecord.html',context)
 def withdrawrecord(request):
     try:
-        lists=Withdrawal.objects.get(person=request.user.id)
+        lists=Withdrawal.objects.filter(person=request.user.id)
     except:
         lists={}
     context={'lists':lists,'header':'Withdraws Initiated Record'}
     return render(request, 'withdrawdepositrecord.html',context)
-     
+@login_required
 def withdrawals(request):
     if request.method=="POST":
         amount=request.POST.get('amount')
-        wallet=request.POST.get('wallet')
+        address=request.POST.get('wallet')
         method=request.POST.get('method')
-        method_new=Currencie.objects.get(id=method)
+        method_new=Wallet.objects.get(id=method)
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
-        if Withdrawal.objects.filter(person=request.user.id):
-            balance=Balance.objects.get(person=request.user.id)
-            Balance=balance.amount
-            try:
-                withdrawamount=Withdrawal.objects.get(person=request.user.id)
-                withdrawaldate=withdrawamount.date_withdraw
-            except:
-                withdrawamount=None
+        balance=Balance.objects.get(person=request.user)
+        balance=balance.amount
+        try:
+            withdrawamount=Deposit.objects.get(person=request.user)
+        except:
+            withdrawamount=None
+        if withdrawamount:
+            withdrawaldate=withdrawamount.date_deposit
             if withdrawaldate != None:
                 try:
                     new_withdrawaldate=(date.today()-withdrawaldate)
                 except:
                     new_withdrawaldate=0
-            if new_withdrawaldate<6:
-                if amount<=((25/100)*Balance):
-                    '''withdrawmoney = PayClass.withdrawmtnmomo(amount, currency, txt_random, phone, message)
-                    if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
-                        CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
-                        print(CheckWithdrawStatus["status"])
-                        if CheckWithdrawStatus["status"]=="SUCCESSFUL":
-                            print("Notification recieved")
 
-                    else:
-                        print("Problem withdraw")
+        if new_withdrawaldate<6:
+            if amount<=((25/100)*Balance):
+                balance=Balance.objects.get(person=request.user.id)
+                balance_of_withdrawn=(balance.amount-amount)
+                balance.amount=balance_of_withdrawn
+                balance.save()
+                withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
+                withdrawal.save()
+                '''withdrawmoney = PayClass.withdrawmtnmomo(amount, currency, txt_random, phone, message)
+                if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
+                    CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
+                    print(CheckWithdrawStatus["status"])
+                    if CheckWithdrawStatus["status"]=="SUCCESSFUL":
+                        print("Notification recieved")
+
                 else:
-                    messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')'''
+                    print("Problem withdraw")
             else:
+                messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')'''
+        else:
 
-                if amount_withdrawal<=((80/100)*Balance):
-                    '''withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
-                    if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
-                        CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
-                        print(CheckWithdrawStatus["status"])
-                        if CheckWithdrawStatus["status"]=="SUCCESSFUL":
-                            print("Notification recieved")
+            if amount_withdrawal<=((80/100)*Balance):
+                balance=Balance.objects.get(person=request.user.id)
+                balance_of_withdrawn=(balance.amount-amount)
+                balance.amount=balance_of_withdrawn
+                balance.save()
+                withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
+                withdrawal.save()
+                '''withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
+                if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
+                    CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
+                    print(CheckWithdrawStatus["status"])
+                    if CheckWithdrawStatus["status"]=="SUCCESSFUL":
+                        print("Notification recieved")
 
-                    else:
-                        print("Problem withdraw")'''
                 else:
-                    '''a = date.today()
-                    b = date(2023, 12, 31)
-                    delta = b - a
-                    print(delta.days, "days left in this year")'''
+                    print("Problem withdraw")'''
+            else:
+                pass
+                '''a = date.today()
+                b = date(2023, 12, 31)
+                delta = b - a
+                print(delta.days, "days left in this year")'''
 
     try:
-        category=Currencie.objects.all()
+        category=Wallet.objects.all()
     except:
         category=[]
     context={'category':category,'header':'Withdrawal Form','button':'WIthdraw'}
@@ -279,39 +301,41 @@ def Logout(request):
     return redirect('index')
 
 def deposit_update(request,id):
-    if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
-                try:
-                    balance=Balance.objects.get(person=request_user)
-                except:
-                    balance=None
-                print(balance)
-                if balance is not None:
-                    print(balance)
-                    balances=(float(balance.amount)+float(amount))
-                    balance.amount=balances
-                    balance.save()
-                    print(balances)
-                else:
-                    balance=Balance(person=request_user,amount=amount)
-                    balance.save()
-                try:
-                    reffered=Referred.objects.get(personrefferred=request_user)
-                except:
-                    reffered=None
-                if reffered is not None:
-                    if reffered.paid==False:
-                        name=reffered.personwhorefferred
-                        payingUser=Balance.objects.get(person=name)
-                        bonus=((7/100)*float(deposit.amount))
-                        newbalance=(float(payingUser.amount)+float(bonus))
-                        refferalbonus=ReferralBonu(person=deposit.person,amount=bonus,paid=True)
-                        refferalbonus.save()
-                        payingUser.amount=newbalance
-                        payingUser.save()
+    user=Deposit.objects.get(id=id)
+    request_user=User.objects.get(username=user.person)
+    #if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
+    try:
+        balance=Balance.objects.get(person=request_user)
+    except:
+        balance=None
+    print(balance)
+    if balance is not None:
+        print(balance)
+        balances=(float(balance.amount)+float(user.amount))
+        balance.amount=balances
+        balance.save()
+        print(balances)
+    else:
+        balance=Balance(person=request_user,amount=user.amount)
+        balance.save()
+    try:
+        reffered=Referred.objects.get(personrefferred=request_user)
+    except:
+        reffered=None
+    if reffered is not None:
+        if reffered.paid==False:
+            name=reffered.personwhorefferred
+            payingUser=Balance.objects.get(person=name)
+            bonus=((7/100)*float(user.amount))
+            newbalance=(float(payingUser.amount)+float(bonus))
+            refferalbonus=ReferralBonu(person=name,amount=bonus,paid=True)
+            refferalbonus.save()
+            payingUser.amount=newbalance
+            payingUser.save()
 
-                deposit=Deposit.objects.get(person=request_user)
-                deposit.status=True
-                deposit.save()
+    deposit=Deposit.objects.get(id=id)
+    deposit.status=True
+    deposit.save()
     return redirect('deposit_table')
 
 
@@ -423,9 +447,9 @@ def coinbase_webhook(request):
                     if reffered.paid==False:
                         name=reffered.personwhorefferred
                         payingUser=Balance.objects.get(person=name)
-                        bonus=((7/100)*float(deposit.amount))
+                        bonus=((7/100)*float(amount))
                         newbalance=(float(payingUser.amount)+float(bonus))
-                        refferalbonus=ReferralBonu(person=deposit.person,amount=bonus,paid=True)
+                        refferalbonus=ReferralBonu(person=name,amount=bonus,paid=True)
                         refferalbonus.save()
                         payingUser.amount=newbalance
                         payingUser.save()

@@ -19,6 +19,10 @@ class AdminPost(admin.ModelAdmin):
     list_display = ['title']
 
 admin.site.register(Post, AdminPost)
+class AdminWallet(admin.ModelAdmin):
+    list_display = ['name']
+
+admin.site.register(Wallet, AdminWallet)
 admin.site.register(Balance, AdminBalance)
 admin.site.register(Withdrawal , AdminWithdrawal)
 admin.site.register(Referred, AdminReferred )
