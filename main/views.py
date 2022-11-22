@@ -78,18 +78,18 @@ def index(request):
             if float(balance.amount)>0:
                 money=float(balance.amount)
                 balance=balance.amount
-                if  10>=money<150:
+                if  10<=money<=150:
                     percentage=4
-                elif 151>=money<=350:
-                    percentage=4.5
-                elif 351>=money<=750:
-                    percentage=5.2
-                elif 751>=money<=1250:
-                    percentage=6.1
-                elif 1251>=money<=2000:
-                    percentage=7.5
+                elif 151<=money<=350:
+                    percentage=4.2
+                elif 351<=money<=750:
+                    percentage=4.4
+                elif 751<=money<=1250:
+                    percentage=4.6
+                elif 1251<=money<=2000:
+                    percentage=4.7
         print(f'{request.user.id}')
-        context={'posts':posts,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
+        context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
     context={'posts':posts}
     return render(request, 'blog.html',context)
