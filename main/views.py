@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect , HttpResponseRedirect
 from datetime import date
 from datetime import datetime
-from .models import Balance,Currencie,Withdrawal,Deposit,Referred,ReferralBonu
+from .models import Balance,Withdrawal,Deposit,Referred,ReferralBonu
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -9,6 +9,18 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 import random
+
+import logging
+from coinbase_commerce.client import Client
+from coinbase_commerce.error import SignatureVerificationError, WebhookInvalidPayload
+from coinbase_commerce.webhook import Webhook
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+import json
+from scumtrader import settings
+
 from django.contrib.auth.hashers import make_password
 #from .pay import PayClass 
 # Create your views here.
@@ -74,8 +86,6 @@ def index(request):
                     percentage=6.1
                 elif 1251>=money<=2000:
                     percentage=7.5
-            else:
-                percentage=0
         print(f'{request.user.id}')
         context={'posts':posts,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
@@ -182,11 +192,12 @@ def transaction_id(request):
 def deposit(request):
     if request.method=="POST":
         amount=request.POST.get('amount')
-        wallet=request.POST.get('wallet')
-        method=request.POST.get('method')
-        method_new=Currencie.objects.get(id=method)
+        date_deposit=datetime.datetime.today()
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
         request.session['txt_random_session'] = f'{txt_random}'
+        request.session['amount'] = f'{amount}'
+        request.session['date_deposit'] = f'{date_deposit}'
+        request.session['request_user'] = f'{request.user}'
         '''callPay = PayClass.momopay(amount, currency, txt_random, phone, message)
                     if callPay["response"]==200 or callPay["response"]==202:
                         verify = PayClass.verifymomo(callPay["ref"])
@@ -196,9 +207,9 @@ def deposit(request):
         
                     else:
                         messages.success(response, f'Problem with the System')'''
-        feed_back=Deposit(person=request.user,wallet=wallet,amount=amount,transID='None',method=method_new,txt_random=txt_random,date_deposit=datetime.datetime.today())
+        feed_back=Deposit(person=request.user,amount=amount,txt_random=txt_random,date_deposit=date_deposit)
         feed_back.save()
-        return redirect('transaction_id')
+        return redirect('pay_view')
             
     try:
         category=Currencie.objects.all()
@@ -265,41 +276,42 @@ def Logout(request):
     messages.success(request, 'You have Signed Out Successfully')
     return redirect('index')
 
+def deposit_update(request,id):
+    if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
+                try:
+                    balance=Balance.objects.get(person=request_user)
+                except:
+                    balance=None
+                print(balance)
+                if balance is not None:
+                    print(balance)
+                    balances=(float(balance.amount)+float(amount))
+                    balance.amount=balances
+                    balance.save()
+                    print(balances)
+                else:
+                    balance=Balance(person=request_user,amount=amount)
+                    balance.save()
+                try:
+                    reffered=Referred.objects.get(personrefferred=request_user)
+                except:
+                    reffered=None
+                if reffered is not None:
+                    if reffered.paid==False:
+                        name=reffered.personwhorefferred
+                        payingUser=Balance.objects.get(person=name)
+                        bonus=((7/100)*float(deposit.amount))
+                        newbalance=(float(payingUser.amount)+float(bonus))
+                        refferalbonus=ReferralBonu(person=deposit.person,amount=bonus,paid=True)
+                        refferalbonus.save()
+                        payingUser.amount=newbalance
+                        payingUser.save()
 
-def deposit_update(request, id):
-    deposit= Deposit.objects.get(id=id)
-    try:
-        balance=Balance.objects.get(person=deposit.person)
-    except:
-        balance=None
-    print(balance)
-    if balance is not None:
-        print(balance)
-        balances=(float(balance.amount)+float(deposit.amount))
-        balance.amount=balances
-        balance.save()
-        print(balances)
-    else:
-        user=User.objects.get(username=deposit.person)
-        balance=Balance(person=user,amount=deposit.amount)
-        balance.save()
-    try:
-        reffered=Referred.objects.get(personrefferred=deposit.person)
-    except:
-        reffered=None
-    if reffered is not None:
-        if reffered.paid==False:
-            name=reffered.personwhorefferred
-            payingUser=Balance.objects.get(person=name)
-            bonus=((7/100)*float(deposit.amount))
-            newbalance=(float(payingUser.amount)+float(bonus))
-            refferalbonus=ReferralBonu(person=deposit.person,amount=bonus,paid=True)
-            refferalbonus.save()
-            payingUser.amount=newbalance
-            payingUser.save()
-    deposit.status=True
-    deposit.save()
+                deposit=Deposit.objects.get(person=request_user)
+                deposit.status=True
+                deposit.save()
     return redirect('deposit_table')
+
 
 def deposit_table(request):
     deposits= Deposit.objects.filter(status=False)
@@ -310,3 +322,118 @@ def deposit_tabledone(request):
     deposits= Deposit.objects.filter(status=True)
     context={'deposits':deposits}
     return render(request,'super.html',context)
+
+
+
+
+
+def pay_view(request):
+    client = Client(api_key=settings.COINBASE_COMMERCE_API_KEY)
+    domain_url = 'http://localhost:8000/'
+    txt_random = request.session.get('txt_random_session')
+    amount = request.session.get('amount')
+    date_deposit = request.session.get('date_deposit')
+    request_user = request.session.get('request_user')
+    print(txt_random, amount, date_deposit, request_user)
+    if not txt_random:
+        return redirect('deposit')
+    amount=str(amount)
+    txt_random=str(txt_random)
+    date_deposit=str(date_deposit)
+    request_user=str(request_user)
+    product = {
+        'name': 'Hustlersbay',
+        'description': 'Crytocurrency Invesment Deposit.',
+        'local_price': {
+            'amount': json.loads(amount),
+            'currency': 'USD'
+        },
+        'pricing_type': 'fixed_price',
+        'redirect_url': domain_url + 'success/',
+        'cancel_url': domain_url + 'cancel/',
+        'metadata': {
+            'amount':amount,
+            'txt_random':txt_random,
+            'date_deposit':date_deposit,
+            'request_user':request_user,
+        },
+    }
+    charge = client.charge.create(**product)
+    request.session['txt_random_session']=''
+    request.session['amount']=''
+    request.session['date_deposit']=''
+    request.session['request_user']=''
+    return render(request, 'home.html', {
+        'charge': charge,
+    })
+
+
+def success_view(request):
+    return render(request, 'success.html', {})
+
+
+def cancel_view(request):
+    return render(request, 'cancel.html', {})
+
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def coinbase_webhook(request):
+    logger = logging.getLogger(__name__)
+
+    request_data = request.body.decode('utf-8')
+    request_sig = request.headers.get('X-CC-Webhook-Signature', None)
+    webhook_secret = settings.COINBASE_COMMERCE_WEBHOOK_SHARED_SECRET
+
+    try:
+        event = Webhook.construct_event(request_data, request_sig, webhook_secret)
+
+        # List of all Coinbase webhook events:
+        # https://commerce.coinbase.com/docs/api/#webhooks
+
+        if event['type'] == 'charge:confirmed':
+            logger.info('Payment confirmed.')
+            amount = event['data']['metadata']['amount']
+            txt_random = event['data']['metadata']['txt_random']
+            date_deposit = event['data']['metadata']['date_deposit']
+            request_user = event['data']['metadata']['request_user']
+
+            if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
+                try:
+                    balance=Balance.objects.get(person=request_user)
+                except:
+                    balance=None
+                print(balance)
+                if balance is not None:
+                    print(balance)
+                    balances=(float(balance.amount)+float(amount))
+                    balance.amount=balances
+                    balance.save()
+                    print(balances)
+                else:
+                    balance=Balance(person=request_user,amount=amount)
+                    balance.save()
+                try:
+                    reffered=Referred.objects.get(personrefferred=request_user)
+                except:
+                    reffered=None
+                if reffered is not None:
+                    if reffered.paid==False:
+                        name=reffered.personwhorefferred
+                        payingUser=Balance.objects.get(person=name)
+                        bonus=((7/100)*float(deposit.amount))
+                        newbalance=(float(payingUser.amount)+float(bonus))
+                        refferalbonus=ReferralBonu(person=deposit.person,amount=bonus,paid=True)
+                        refferalbonus.save()
+                        payingUser.amount=newbalance
+                        payingUser.save()
+
+                deposit=Deposit.objects.get(person=request_user)
+                deposit.status=True
+                deposit.save()
+
+    except (SignatureVerificationError, WebhookInvalidPayload) as e:
+        return HttpResponse(e, status=400)
+
+    logger.info(f'Received event: id={event.id}, type={event.type}')
+    return HttpResponse('ok', status=200)

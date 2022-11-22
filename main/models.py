@@ -15,15 +15,10 @@ class Balance(models.Model):
 	class Meta:
 		ordering = ('-date_deposited', )
 
-class Currencie(models.Model):
-	name = models.CharField(max_length=1000)
-	def __str__(self):
-		return self.name
 class Withdrawal(models.Model):
 	person = models.CharField(max_length=1000)
 	date_withdraw =models.DateTimeField(default=datetime.datetime.today)
 	amount= models.CharField(max_length=1000)
-	method=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
 	phone =models.CharField(max_length=1000, default=1)
 	txt_random=models.CharField(max_length=1000,default=1)
 	status=models.BooleanField(default=False)
@@ -35,9 +30,6 @@ class Withdrawal(models.Model):
 class Deposit(models.Model):
 	person = models.CharField(max_length=1000)
 	amount= models.CharField(max_length=1000)
-	method=models.ForeignKey(Currencie, on_delete=models.CASCADE, default=1)
-	wallet =models.CharField(max_length=1000, default=1)
-	transID =models.CharField(max_length=1000, default=1)
 	txt_random=models.CharField(max_length=1000, default=1)
 	date_deposit =models.DateTimeField(default=datetime.datetime.today)
 	status=models.BooleanField(default=False)
