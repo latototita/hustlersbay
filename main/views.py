@@ -365,7 +365,7 @@ def deposit_tabledone(request):
 
 def pay_view(request):
     client = Client(api_key=settings.COINBASE_COMMERCE_API_KEY)
-    domain_url = 'http://localhost:8000/'
+    domain_url = 'https://www.hustlersbay.online/'
     txt_random = request.session.get('txt_random_session')
     amount = request.session.get('amount')
     date_deposit = request.session.get('date_deposit')
@@ -382,7 +382,7 @@ def pay_view(request):
         'description': 'Crytocurrency Invesment Deposit.',
         'local_price': {
             'amount': json.loads(amount),
-            'currency': 'UGX'
+            'currency': 'USD'
         },
         'pricing_type': 'fixed_price',
         'redirect_url': domain_url + 'success/',
