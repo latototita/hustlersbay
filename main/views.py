@@ -21,7 +21,7 @@ from django.views.decorators.http import require_http_methods
 import json
 from scumtrader import settings
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.core.mail import send_mail
 
 from django.contrib.auth.hashers import make_password
 #from .pay import PayClass 
@@ -97,7 +97,7 @@ def index(request):
                 elif 2001<=money<=3000:
                     percentage=4.412
                 else:
-                    pass
+                    percentage=0
         print(f'{request.user.id}')
         context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
@@ -112,7 +112,7 @@ def terms(request):
 @login_required
 def depositrecord(request):
     try:
-        lists=Deposit.objects.filter(person=request.user.id)
+        lists=Deposit.objects.filter(person=request.user)
     except:
         lists={}
     context={'lists':lists,'header':'Deposits Initiated Record'}
@@ -121,7 +121,7 @@ def depositrecord(request):
 @login_required
 def withdrawrecord(request):
     try:
-        lists=Withdrawal.objects.filter(person=request.user.id)
+        lists=Withdrawal.objects.filter(person=request.user)
     except:
         lists={}
     context={'lists':lists,'header':'Withdraws Initiated Record'}
@@ -136,6 +136,14 @@ def withdrawals(request):
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
         balance=Balance.objects.get(person=request.user)
         balance=balance.amount
+        balance=Balance.objects.get(person=request.user)
+        balance_of_withdrawn=(float(balance.amount)-float(amount))
+        balance.amount=balance_of_withdrawn
+        balance.save()
+        withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
+        withdrawal.save()
+        return redirect('index')
+        '''
         try:
             withdrawamount=Deposit.objects.get(person=request.user)
         except:
@@ -156,7 +164,7 @@ def withdrawals(request):
                 balance.save()
                 withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
                 withdrawal.save()
-                '''withdrawmoney = PayClass.withdrawmtnmomo(amount, currency, txt_random, phone, message)
+                withdrawmoney = PayClass.withdrawmtnmomo(amount, currency, txt_random, phone, message)
                 if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
                     CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
                     print(CheckWithdrawStatus["status"])
@@ -164,7 +172,7 @@ def withdrawals(request):
                         print("Notification recieved")
 
                 else:
-                    print("Problem withdraw")'''
+                    print("Problem withdraw")
             else:
                 messages.success(request, f'Please withdraw amount less than 25% of your current balance or Wait after 6 days from your last deosit to withdraw all your cash and profits')
         else:
@@ -177,17 +185,17 @@ def withdrawals(request):
                 withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
                 withdrawal.save()
                 withdrawmoney = PayClass.withdrawmtnmomo("50", "EUR", "1234laban", "+256776576547", "Laban")
-                '''if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
+                if withdrawmoney["response"]==200 or withdrawmoney["response"]==202:
                     CheckWithdrawStatus = PayClass.checkwithdrawstatus(withdrawmoney["ref"])
                     print(CheckWithdrawStatus["status"])
                     if CheckWithdrawStatus["status"]=="SUCCESSFUL":
                         print("Notification recieved")
 
                 else:
-                    print("Problem withdraw")'''
+                    print("Problem withdraw")
             else:
                 pass
-                '''a = date.today()
+                a = date.today()
                 b = date(2023, 12, 31)
                 delta = b - a
                 print(delta.days, "days left in this year")
@@ -379,7 +387,7 @@ def pay_view(request):
     request_user=str(request_user)
     product = {
         'name': 'Hustlersbay',
-        'description': 'Crytocurrency Invesment Deposit.',
+        'description': 'Crytocurrency Deposit.',
         'local_price': {
             'amount': json.loads(amount),
             'currency': 'USD'
@@ -405,7 +413,7 @@ def pay_view(request):
 
 
 def success_view(request):
-    messages.success(request, f'Deposit Made Successfully.')
+    messages.success(request, f'Deposit Made Successfully.Amount Balance will be updated Shortly')
     return redirect('index')
 
 
@@ -435,8 +443,13 @@ def coinbase_webhook(request):
             txt_random = event['data']['metadata']['txt_random']
             date_deposit = event['data']['metadata']['date_deposit']
             request_user = event['data']['metadata']['request_user']
-
-            if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
+            send_mail('Deposit Made Successfully',
+            f'{request_user} Has Just made a Deposit Successfully;\n Amount :{amount} \n Txt_random :{txt_random} \n Time :{date_deposit}',
+            settings.EMAIL_HOST_USER,
+            ['pearlmartbusinesses@gmail.com'],
+            fail_silently = True,
+            )
+            '''if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
                 try:
                     balance=Balance.objects.get(person=request_user)
                 except:
@@ -468,7 +481,7 @@ def coinbase_webhook(request):
 
                 deposit=Deposit.objects.get(person=request_user)
                 deposit.status=True
-                deposit.save()
+                deposit.save()'''
 
     except (SignatureVerificationError, WebhookInvalidPayload) as e:
         return HttpResponse(e, status=400)
