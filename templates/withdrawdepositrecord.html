@@ -34,6 +34,11 @@
                                                                         <th>Amount</th>
                                                                         <th>Date</th>
                                                                         <th>TXT Code</th>
+                                                                        {% if with %}
+                                                                        <th>Coin</th>
+                                                                        <th>Wallet</th>
+                                                                        {% endif %}
+                                                                        <th>Status</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -55,6 +60,26 @@
                                                                         <td>
                                                                             <p class="d-inline-block m-r-20">{{ i.txt_random }}</p>
                                                                         </td>
+                                                                        {% if with %}
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">{{ i.wallet }}</p>
+                                                                        </td>
+                                                                        
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">{{ i.address }}</p>
+                                                                        </td>
+                                                                        {% endif%}
+                                                                        {% if i.status == True %}
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20"style=": 100px;height: 50px;font-size: 14px;color: #ffffff;font-weight: 600;
+                                                                            line-height: 50px;text-align:center;display: block;background-color:#90EE90;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 10%;text-transform: uppercase;">Completed</p>
+                                                                        </td>
+                                                                        {% else %}
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20" style=": 100px;height: 50px;font-size: 14px;color: #ffffff;font-weight: 600;
+                                                                            line-height: 50px;text-align:center;display: block;background-color:#077E8C;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 10%;text-transform: uppercase;">Pending </p>
+                                                                        </td>
+                                                                        {% endif %}
                                                                     </tr>
                                                                     {% endfor %}
                                                                 </tbody>

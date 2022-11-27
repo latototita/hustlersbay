@@ -86,20 +86,27 @@ def index(request):
                 balance=balance.amount
                 if  10<=money<=150:
                     percentage=4
+                    todayprofit=(float(percentage/100)*float(money))
                 elif 151<=money<=350:
                     percentage=4.1
+                    todayprofit=float(percentage/100)*float(money)
                 elif 351<=money<=750:
                     percentage=4.2
+                    todayprofit=float(percentage/100)*float(money)
                 elif 751<=money<=1250:
                     percentage=4.3
+                    todayprofit=float(percentage/100)*float(money)
                 elif 1251<=money<=2000:
                     percentage=4.4
+                    todayprofit=float(percentage/100)*float(money)
                 elif 2001<=money<=3000:
                     percentage=4.412
+                    todayprofit=float(percentage/100)*float(money)
                 else:
                     percentage=0
+                    todayprofit=0
         print(f'{request.user.id}')
-        context={'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
+        context={'todayprofit':todayprofit,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
     context={'posts':posts}
     return render(request, 'blog.html',context)
@@ -124,7 +131,7 @@ def withdrawrecord(request):
         lists=Withdrawal.objects.filter(person=request.user)
     except:
         lists={}
-    context={'lists':lists,'header':'Withdraws Initiated Record'}
+    context={'lists':lists,'header':'Withdraws Initiated Record','with':'with'}
     return render(request, 'withdrawdepositrecord.html',context)
 @login_required
 def withdrawals(request):
@@ -134,14 +141,31 @@ def withdrawals(request):
         method=request.POST.get('method')
         method_new=Wallet.objects.get(id=method)
         txt_random= ''.join([random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567893456789abcdefghijklmnopqrstuvwxyz') for _ in range(10)])
-        balance=Balance.objects.get(person=request.user)
-        balance=balance.amount
-        balance=Balance.objects.get(person=request.user)
-        balance_of_withdrawn=(float(balance.amount)-float(amount))
-        balance.amount=balance_of_withdrawn
-        balance.save()
-        withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
-        withdrawal.save()
+        try:
+            balance=Balance.objects.get(person=request.user)
+        except:
+            balance=0
+        if balance==0:
+            messages.success(request, f'Account Balance is 0 USD, Please Deposit to Refunf and Invest')
+            return redirect('deposit')
+        if float(balance.amount)>float(amount):
+            balance=Balance.objects.get(person=request.user)
+            balance=balance.amount
+            balance=Balance.objects.get(person=request.user)
+            balance_of_withdrawn=(float(balance.amount)-float(amount))
+            balance.amount=balance_of_withdrawn
+            balance.save()
+            withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
+            withdrawal.save()
+            send_mail('Deposit Made Successfully',
+                f'{request_user} Has Just made a Deposit Successfully;\n Amount :{amount} \n Txt_random :{txt_random} \n Time :{date_deposit}',
+                settings.EMAIL_HOST_USER,
+                ['hustlersbaydeposit@gmail.com'],
+                fail_silently = True,
+                )
+        else:
+            messages.success(request, f'Please withdraw Less than {balance.amount} Which is Your Current Balance')
+            return redirect('withdraw')
         return redirect('index')
         '''
         try:
@@ -446,7 +470,7 @@ def coinbase_webhook(request):
             send_mail('Deposit Made Successfully',
             f'{request_user} Has Just made a Deposit Successfully;\n Amount :{amount} \n Txt_random :{txt_random} \n Time :{date_deposit}',
             settings.EMAIL_HOST_USER,
-            ['pearlmartbusinesses@gmail.com'],
+            ['hustlersbaydeposit@gmail.com'],
             fail_silently = True,
             )
             '''if Deposit.objects.filter(person=request_user).filter(txt_random=txt_random).filter(date_deposit__gte=date_deposit).filter(amount=amount):
