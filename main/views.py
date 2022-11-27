@@ -382,7 +382,7 @@ def pay_view(request):
         'description': 'Crytocurrency Invesment Deposit.',
         'local_price': {
             'amount': json.loads(amount),
-            'currency': 'USD'
+            'currency': 'UGX'
         },
         'pricing_type': 'fixed_price',
         'redirect_url': domain_url + 'success/',
