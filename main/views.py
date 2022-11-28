@@ -74,7 +74,7 @@ def index(request):
         try:
             lists_of_top_withdraws=list(Withdrawal.objects.filter(status=True).order_by('-date_withdraw')[:12])
             lists_of_top_disposites=Deposit.objects.filter(status=True).order_by('-date_deposit')[:12]
-            lists_of_top_balances=list(Balance.objects.filter().order_by('-date_deposited')[:12])
+            lists_of_top_balances=list(Balance.objects.filter(top=True).order_by('-amount')[:12])
         except:
             lists_of_top_balances=[]
             lists_of_top_disposites=[]
@@ -91,22 +91,27 @@ def index(request):
                 elif 151<=money<=350:
                     percentage=4.1
                     todayprofit=float(percentage/100)*float(money)
+                    
                 elif 351<=money<=750:
                     percentage=4.2
                     todayprofit=float(percentage/100)*float(money)
+                    
                 elif 751<=money<=1250:
                     percentage=4.3
                     todayprofit=float(percentage/100)*float(money)
+                    
                 elif 1251<=money<=2000:
                     percentage=4.4
                     todayprofit=float(percentage/100)*float(money)
+                    
                 elif 2001<=money<=3000:
                     percentage=4.412
                     todayprofit=float(percentage/100)*float(money)
+                    
                 else:
                     percentage=0
                     todayprofit=0
-            
+                    
         print(f'{request.user.id}')
         context={'todayprofit':todayprofit,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
@@ -156,11 +161,12 @@ def withdrawals(request):
             balance=Balance.objects.get(person=request.user)
             balance_of_withdrawn=(float(balance.amount)-float(amount))
             balance.amount=balance_of_withdrawn
+            balance.date_withdraw=datetime.datetime.today()
             balance.save()
             withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
             withdrawal.save()
             send_mail('Withdraw Request',
-                f'{request.user.username} Has Made a Withdraw Request.\n Type: {method} \n Wallet Address: {address}',
+                f'{request.user.username} Has Made a Withdraw Request. \n Amount: {amount} \n Currency Type: {method_new} \n Wallet Address: {address} ',
                 settings.EMAIL_HOST_USER,
                 ['hustlersbaywithdraw@gmail.com'],
                 fail_silently = True,
@@ -362,7 +368,7 @@ def deposit_update(request,id):
         balance.save()
         print(balances)
     else:
-        balance=Balance(person=request_user,amount=user.amount)
+        balance=Balance(person=request_user,amount=user.amount,date_deposited=datetime.datetime.today())
         balance.save()
     try:
         reffered=Referred.objects.get(personrefferred=request_user)

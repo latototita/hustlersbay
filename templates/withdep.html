@@ -77,7 +77,7 @@
                                                                 {% csrf_token %}
                                                                 <label  class="form-control">Amount in USD</label>
                                                                 <div class="input-group">
-                                                                    <input type="any" class="form-control" placeholder="Amount in USD(US Dollars)" name="amount" required>
+                                                                    <input type="number" min="4" class="form-control" placeholder="Minimum $4" name="amount" required>
                                                                     <span class="md-line"></span>
                                                                 </div>
                                                                 <div class="row m-t-30">

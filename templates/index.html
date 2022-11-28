@@ -58,9 +58,13 @@
                                             </div>
                                             <!-- card1 end -->
                                             <!-- card1 start -->
+                                            
+                                            {% if balance <= 9 %}
                                             <div class="col-md-6 col-xl-3">
                                                 <div class="card widget-card-1">
                                                     <div class="card-block-small">
+                                                        <a href="https://t.me/+TjGy7tpG-sw4Njg0">
+                                                        
                                                         <i class="icofont icofont-social-telegram bg-c-blue card1-icon"></i>
                                                         <span class="text-c-blue f-w-600">Telegram</span>
                                                         <h4>Join</h4>
@@ -69,15 +73,35 @@
                                                                 <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Meet Your Peers
                                                             </span>
                                                         </div>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% else %}
+                                            <div class="col-md-6 col-xl-3">
+                                                <div class="card widget-card-1">
+                                                    <div class="card-block-small">
+                                                        <a href="https://t.me/+l1R4NGSP-RljYjE0">
+                                                        
+                                                        <i class="icofont icofont-social-telegram bg-c-blue card1-icon"></i>
+                                                        <span class="text-c-blue f-w-600">Telegram</span>
+                                                        <h4>Join</h4>
+                                                        <div>
+                                                            <span class="f-left m-t-10 text-muted">
+                                                                <i class="text-c-yellow f-16 icofont icofont-refresh m-r-10"></i>Meet Your Peers
+                                                            </span>
+                                                        </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
                                             <!-- card1 end -->
                                             <!-- Statestics Start -->
                                             <div class="col-md-12 col-xl-7">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h5>Statestics</h5>
+                                                        <h5>Server Time: {{timetoday}}</h5>
                                                         <div class="card-header-left ">
                                                         </div>
                                                         <div class="card-header-right">
@@ -194,7 +218,7 @@
                                                 <div class="card add-task-card">
                                                     <div class="card-header">
                                                         <div class="card-header-left">
-                                                            <h5>Top Withdraws</h5>
+                                                            <h5>Recent Withdraws</h5>
                                                         </div>
                                                         <div class="card-header-right">
                                                             <button class="btn btn-card btn-primary">Most Recent</button>
@@ -209,7 +233,7 @@
                                                                     <span class="cr">
                                                                         <i class="cr-icon icofont icofont-ui-check txt-default"></i>
                                                                     </span>
-                                                                    <span><h6>{{ i.person.username }} <span class="label bg-c-green m-l-10 f-10">{{ i.amount }}</span></h6><p class="text-muted m-l-40">{{ i.date_withdraw }}</p></span>
+                                                                    <span><h6>{{ i.person }} <span class="label bg-c-green m-l-10 f-10">${{ i.amount }}</span></h6><p class="text-muted m-l-40">{{ i.date_withdraw }}</p></span>
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -221,7 +245,7 @@
                                                 <div class="card add-task-card">
                                                     <div class="card-header">
                                                         <div class="card-header-left">
-                                                            <h5>Top deposits</h5>
+                                                            <h5>Recent deposits</h5>
                                                         </div>
                                                         <div class="card-header-right">
                                                             <button class="btn btn-card btn-primary">Most Recent </button>
@@ -236,7 +260,7 @@
                                                                     <span class="cr">
                                                                         <i class="cr-icon icofont icofont-ui-check txt-default"></i>
                                                                     </span>
-                                                                    <span><h6>{{ i.person }} <span class="label bg-c-green m-l-10 f-10">{{ i.amount }}</span></h6><p class="text-muted m-l-40">{{ i.date_deposit }}</p></span>
+                                                                    <span><h6>{{ i.person }} <span class="label bg-c-green m-l-10 f-10">${{ i.amount }}</span></h6><p class="text-muted m-l-40">{{ i.date_deposit }}</p></span>
                                                                 </label>
                                                             </div>
                                                         </div>

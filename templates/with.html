@@ -77,7 +77,7 @@
                                                                 {% csrf_token %}
                                                                 <label  class="form-control">Amount in USD</label>
                                                                 <div class="input-group">
-                                                                    <input type="number" class="form-control" placeholder="Amount in USD(US Dollars)" name="amount" required>
+                                                                    <input type="number" min="4" class="form-control" placeholder="Minimum $4" name="amount" required>
                                                                     <span class="md-line"></span>
                                                                 </div>
                                                                 <label  class="form-control">Select Payment method</label>
@@ -88,9 +88,9 @@
                                                                             {% endfor %}
                                                                         </select>
                                                                 </div>
-                                                                <label  class="form-control">Enter Wallet Address(Trc-20 etc) or Deposit Account(MTN/AIRTEL)</label>
+                                                                <label  class="form-control">Enter Wallet Address</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control" placeholder="Mobile Money Number starting with 256..." name="wallet" required>
+                                                                    <input type="text" class="form-control" placeholder="Enter Wallet Address" name="wallet" required>
                                                                     <span class="md-line"></span>
                                                                 </div>
                                                                 
