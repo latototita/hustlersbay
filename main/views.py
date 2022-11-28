@@ -70,6 +70,7 @@ def index(request):
         except:
             balance=0
             percentage=0
+            todayprofit=0
         try:
             lists_of_top_withdraws=list(Withdrawal.objects.filter(status=True).order_by('-date_withdraw')[:12])
             lists_of_top_disposites=Deposit.objects.filter(status=True).order_by('-date_deposit')[:12]
@@ -105,6 +106,7 @@ def index(request):
                 else:
                     percentage=0
                     todayprofit=0
+            
         print(f'{request.user.id}')
         context={'todayprofit':todayprofit,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
         return render(request, 'index.html',context)
