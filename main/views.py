@@ -159,8 +159,8 @@ def withdrawals(request):
             balance.save()
             withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
             withdrawal.save()
-            send_mail('Deposit Made Successfully',
-                f'{request_user} Has Just made a Deposit Successfully;\n Amount :{amount} \n Txt_random :{txt_random} \n Time :{date_deposit}',
+            send_mail('Withdraw Request',
+                f'{request.user.username} Has Made a Withdraw Request.\n Type: {method} \n Wallet Address: {address}',
                 settings.EMAIL_HOST_USER,
                 ['hustlersbaywithdraw@gmail.com'],
                 fail_silently = True,
