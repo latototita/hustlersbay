@@ -162,9 +162,11 @@ def withdrawals(request):
             send_mail('Deposit Made Successfully',
                 f'{request_user} Has Just made a Deposit Successfully;\n Amount :{amount} \n Txt_random :{txt_random} \n Time :{date_deposit}',
                 settings.EMAIL_HOST_USER,
-                ['hustlersbaydeposit@gmail.com'],
+                ['hustlersbaywithdraw@gmail.com'],
                 fail_silently = True,
                 )
+            messages.success(request, f'Withdrawal Made Successfully. To be completed Shortly.')
+            return redirect('index')
         else:
             messages.success(request, f'Please withdraw Less than {balance.amount} Which is Your Current Balance')
             return redirect('withdraw')
