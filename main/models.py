@@ -9,7 +9,6 @@ class Balance(models.Model):
 	person = models.CharField(max_length=1000)
 	amount= models.CharField(max_length=1000)
 	date_deposited =models.DateTimeField()
-	top=models.BooleanField(default=False)
 	def __str__(self):
 		return self.amount
 
