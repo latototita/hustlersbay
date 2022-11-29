@@ -384,6 +384,8 @@ def deposit_update(request,id):
             refferalbonus.save()
             payingUser.amount=newbalance
             payingUser.save()
+            reffered.paid=True
+            reffered.save()
 
     deposit=Deposit.objects.get(id=id)
     deposit.status=True
