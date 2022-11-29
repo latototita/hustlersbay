@@ -142,7 +142,7 @@
                                                             <i class="icofont icofont-bitcoin"></i>
                                                             <div class="d-inline-block ">
                                                                 <h5>Invest daily</h5>
-                                                                <span>Hustlersbat</span>
+                                                                <span>Hustlersbay</span>
                                                             </div>
                                                         </div>
                                                         <div class="card-block text-center">
@@ -174,14 +174,18 @@
                                                             <table class="table table-hover">
                                                                 <thead>
                                                                     <tr>
+                                                                        <th>Usernames</th>
                                                                         <th>Amount</th>
                                                                         <th>Date</th>
-                                                                        <th>Random Code</th>
+                                                                        
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     {% for i in lists_of_top_balances %}
                                                                     <tr>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">{{ i.person}}</p>
+                                                                        </td>
                                                                         <td>
                                                                             <div class="task-contain">
                                                                                 <h6 class="bg-c-blue d-inline-block text-center">$</h6>
@@ -191,9 +195,7 @@
                                                                         <td>
                                                                             <p class="d-inline-block m-r-20">{{ i.date_deposited }}</p>
                                                                         </td>
-                                                                        <td>
-                                                                            <p class="d-inline-block m-r-20">{{ i.person}}</p>
-                                                                        </td>
+                                                                        
                                                                     </tr>
                                                                     {% endfor %}
                                                                 </tbody>
