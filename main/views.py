@@ -113,7 +113,7 @@ def index(request):
                     todayprofit=0
                     
         print(f'{request.user.id}')
-        context={'todayprofit':todayprofit,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Top Investors'}
+        context={'todayprofit':todayprofit,'percentage':percentage,'timetoday':timetoday,'lists_of_top_balances':lists_of_top_balances,'lists_of_top_disposites':lists_of_top_disposites,'lists_of_top_withdraws':lists_of_top_withdraws,'balance':balance,'header':'Balances of Most Recent Investors'}
         return render(request, 'index.html',context)
     context={'posts':posts}
     return render(request, 'blog.html',context)
