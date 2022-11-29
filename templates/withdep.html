@@ -62,6 +62,83 @@
                                                 <div class="card">
                                                     <div class="card-block typography">
                                                         <div class="row">
+                                                            <button class="accordion">Network Transaction Charges For Withdraws</button>
+                                                            <div class="col-sm-12 col-xl-6 panel">
+                                                                
+                                                    <div class="card-block p-b-10">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Currency</th>
+                                                                        <th>Charges</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="task-contain">
+                                                                                
+                                                                                <p class="d-inline-block m-l-20">USDT(TRC-20)</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">$2</p>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="task-contain">
+                                                                                
+                                                                                <p class="d-inline-block m-l-20">USDT(ERC-20)</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">$4</p>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="task-contain">
+                                                                                <p class="d-inline-block m-l-20">TRX(Tron)</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">$1</p>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="task-contain">
+                                                                                <p class="d-inline-block m-l-20">DogeCoin</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">$1</p>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="task-contain">
+                                                                                <p class="d-inline-block m-l-20">Shiba Inu</p>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="d-inline-block m-r-20">$1</p>
+                                                                        </td>
+                                                                        
+                                                                    </tr>
+                                                                 
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                            </div>
                                                             <div class="col-sm-12 signup-card card-block auth-body mr-auto ml-auto">
                                                         <form class="md-float-material"  method="POST">
                                                             <div class="text-center">
@@ -114,4 +191,51 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+    var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    /* Toggle between adding and removing the "active" class,
+    to highlight the button that controls the panel */
+    this.classList.toggle("active");
+
+    /* Toggle between hiding and showing the active panel */
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+} 
+</script>
+<style type="text/css">
+    /* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: #90EE90;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+}
+</style>
 {% endblock %}
