@@ -71,10 +71,10 @@ def index(request):
             balance=0
             percentage=0
             todayprofit=0
-        try:
+        try: 
             lists_of_top_withdraws=list(Withdrawal.objects.filter(status=True).order_by('-date_withdraw')[:12])
             lists_of_top_disposites=Deposit.objects.filter(status=True).order_by('-date_deposit')[:12]
-            lists_of_top_balances=list(Balance.objects.filter(top=True).order_by('-amount')[:12])
+            lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
         except:
             lists_of_top_balances=[]
             lists_of_top_disposites=[]
@@ -161,7 +161,7 @@ def withdrawals(request):
             balance=Balance.objects.get(person=request.user)
             balance_of_withdrawn=(float(balance.amount)-float(amount))
             balance.amount=balance_of_withdrawn
-            balance.date_withdraw=datetime.datetime.today()
+            #balance.date_withdraw=datetime.datetime.today()
             balance.save()
             withdrawal=Withdrawal(address=address,wallet=method_new,person=request.user,amount=amount,txt_random=txt_random,date_withdraw=datetime.datetime.today())
             withdrawal.save()
