@@ -72,9 +72,9 @@ def index(request):
             percentage=0
             todayprofit=0
         try: 
-            lists_of_top_withdraws=list(Withdrawal.objects.filter(status=True).order_by('-date_withdraw')[:12])
+            lists_of_top_withdraws=Withdrawal.objects.filter(status=True).order_by('-date_withdraw')[:12]
             lists_of_top_disposites=Deposit.objects.filter(status=True).order_by('-date_deposit')[:12]
-            lists_of_top_balances=list(Balance.objects.order_by('-date_deposited')[:12])
+            lists_of_top_balances=Balance.objects.order_by('-date_deposited')[:12]
         except:
             lists_of_top_balances=[]
             lists_of_top_disposites=[]

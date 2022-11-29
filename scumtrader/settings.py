@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import dotenv
 from pathlib import Path
 import os
+dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -146,9 +147,13 @@ EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.mail.yahoo.com'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER='pearlmartbusinesses@yahoo.com'
-EMAIL_HOST_PASSWORD='jlxmlemwkciomuea'
 
 
-COINBASE_COMMERCE_API_KEY = '5d9ca00f-5358-423f-8e39-b465e3a02c1e'
-COINBASE_COMMERCE_WEBHOOK_SHARED_SECRET = 'ead3ea39-5709-432f-80c3-eb1cd5e79a32'
+
+
+
+
+EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=os.environ.get('EMAIL_HOST_PASSWORD')
+COINBASE_COMMERCE_API_KEY =os.environ.get('COINBASE_COMMERCE_API_KEY')
+COINBASE_COMMERCE_WEBHOOK_SHARED_SECRET = os.environ.get('COINBASE_COMMERCE_WEBHOOK_SHARED_SECRET')
